@@ -1,21 +1,24 @@
 import { useEffect, useState } from 'react';
 import Subject from './models/subject';
 import { Table } from '@mantine/core';
+import { SlArrowUp, SlArrowDown } from "react-icons/sl";
+
 
 function SubjectTable() {
 
   const [subjects, setSubjects] = useState<Subject[]>([])
-  const [isLoadingData, setIsLoadingData] = useState<boolean>(false)
+
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc'); // Initial sorting order
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setIsLoadingData(true);
+
         const response = await fetch('https://055d8281-4c59-4576-9474-9b4840b30078.mock.pstmn.io/subjects');
         const result = (await response.json()).data as Subject[]
 
         setSubjects(result);
-        setIsLoadingData(false);
+
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -24,17 +27,28 @@ function SubjectTable() {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    console.log(subjects)
-  }, [subjects])
+  const handleSort = () => {
+    const sortedData = [...subjects];
 
-  const ths = (
+    sortedData.sort((a, b) => {
+      if (sortOrder === 'asc') {
+        return a.name.localeCompare(b.name);
+      } else {
+        return b.name.localeCompare(a.name);
+      }
+    });
+
+    setSubjects(sortedData);
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc'); // Toggle sorting order
+  };
+
+  const headers = (
     <Table.Tr>
       <Table.Th>Subject Id</Table.Th>
-      <Table.Th>Name</Table.Th>
+      <Table.Th>Name {sortOrder === 'asc' ? <SlArrowUp onClick={handleSort} /> : <SlArrowDown onClick={handleSort} />}</Table.Th>
       <Table.Th>Age</Table.Th>
       <Table.Th>Gender</Table.Th>
-      <Table.Th>Diagnosis Data</Table.Th>
+      <Table.Th>Diagnosis Date</Table.Th>
       <Table.Th>Status</Table.Th>
     </Table.Tr>
   );
@@ -48,18 +62,14 @@ function SubjectTable() {
       <Table.Td>{subject.diagnosisDate}</Table.Td>
       <Table.Td>{subject.status}</Table.Td>
     </Table.Tr>
-  ))
+  ));
 
   return (
     <>
-      {
-        isLoadingData ? 
-          <p>Loading...</p> : 
-          <Table striped highlightOnHover withTableBorder withColumnBorders>
-            <Table.Thead>{ths}</Table.Thead>
-            <Table.Tbody>{rows}</Table.Tbody>
-          </Table>
-      }
+      <Table striped highlightOnHover withTableBorder withColumnBorders>
+        <Table.Thead>{headers}</Table.Thead>
+        <Table.Tbody>{rows}</Table.Tbody>
+      </Table>
     </>
   );
 };
