@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
 import Subject from './models/subject';
 import { Table } from '@mantine/core';
-import { SlArrowUp, SlArrowDown } from "react-icons/sl";
+import SortButton from './components/SortButton';
 
 
 function SubjectTable() {
 
   const [subjects, setSubjects] = useState<Subject[]>([])
 
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc'); // Initial sorting order
-
+  // Fetch Data from Endpoint
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -27,28 +26,18 @@ function SubjectTable() {
     fetchData();
   }, []);
 
-  const handleSort = () => {
-    const sortedData = [...subjects];
-
-    sortedData.sort((a, b) => {
-      if (sortOrder === 'asc') {
-        return a.name.localeCompare(b.name);
-      } else {
-        return b.name.localeCompare(a.name);
-      }
-    });
-
-    setSubjects(sortedData);
-    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc'); // Toggle sorting order
+  const sortSubjects = (newValue: Subject[]) => {
+    console.log("pressed sort")
+    setSubjects(newValue)
   };
 
   const headers = (
     <Table.Tr>
       <Table.Th>Subject Id</Table.Th>
-      <Table.Th>Name {sortOrder === 'asc' ? <SlArrowUp onClick={handleSort} /> : <SlArrowDown onClick={handleSort} />}</Table.Th>
-      <Table.Th>Age</Table.Th>
+      <Table.Th>Name <SortButton updateSort={sortSubjects} subjects={subjects} sortBy={'name'} /></Table.Th>
+      <Table.Th>Age <SortButton updateSort={sortSubjects} subjects={subjects} sortBy={'Age'} /></Table.Th>
       <Table.Th>Gender</Table.Th>
-      <Table.Th>Diagnosis Date</Table.Th>
+      <Table.Th>Diagnosis Date <SortButton updateSort={sortSubjects} subjects={subjects} sortBy={'Diagnosis Date'} /></Table.Th>
       <Table.Th>Status</Table.Th>
     </Table.Tr>
   );
