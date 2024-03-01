@@ -5,13 +5,16 @@ import { DatePickerInput } from '@mantine/dates';
 import SortButton from './components/SortButton';
 import '@mantine/dates/styles.css';
 
-
-
 function SubjectTable() {
 
   const [subjects, setSubjects] = useState<Subject[]>([])
 
-  const [filteredData, setFilteredData] = useState<Subject[] | null>(null);
+  const [filters, setFilters] = useState({
+    gender: '',
+    showActiveOnly: false
+  });
+
+  // const [filteredData, setFilteredData] = useState<Subject[] | null>(null);
   const [checked, setChecked] = useState(false);
 
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -25,6 +28,7 @@ function SubjectTable() {
         const response = await fetch('https://055d8281-4c59-4576-9474-9b4840b30078.mock.pstmn.io/subjects');
         const result = (await response.json()).data as Subject[]
 
+        console.log(result)
         setSubjects(result);
 
       } catch (error) {
@@ -40,44 +44,70 @@ function SubjectTable() {
     setSubjects(newValue)
   };
 
-  const handleFilterByGender = (gender: String) => {
-    if (filteredData && filteredData.length > 0) {
-      // If filter is active, reset filter
-      setFilteredData(null);
-    } else {
-      // If filter is inactive, apply filter
-      const filteredByGender = subjects.filter(item => item.gender === gender);
-      setFilteredData(filteredByGender);
-    }
+  // const handleFilterByGender = (gender: String) => {
+  //   if (filteredData && filteredData.length > 0) {
+  //     // If filter is active, reset filter
+  //     setFilteredData(null);
+  //   } else {
+  //     // If filter is inactive, apply filter
+  //     const filteredByGender = subjects.filter(item => item.gender === gender);
+  //     setFilteredData(filteredByGender);
+  //   }
+  // };
+
+  // const handleActiveFilter = () => {
+  //   if (checked) {
+  //     setFilteredData(null);
+  //   } else {
+  //     const filteredByActive = subjects.filter(item => item.status === 'Active');
+  //     setFilteredData(filteredByActive);
+  //   }
+  // }
+
+  // const handleStartDateChange = (newStartDate: Date | null) => {
+
+  //   const startDateToUse = newStartDate || new Date('0000-01-01T00:00:00.000Z');
+
+  //   const filteredByStartDate = subjects.filter(item => new Date(item.diagnosisDate) > startDateToUse)
+  //   setFilteredData(filteredByStartDate)
+
+  //   setStartDate(newStartDate)
+  // }
+ 
+  // const handleEndDateChange = (newEndDate: Date | null) => {
+
+  //   const endDateToUse = newEndDate || new Date('9999-12-31T23:59:59.999Z');
+
+  //   const filteredByEndDate = subjects.filter(item => new Date(item.diagnosisDate) < endDateToUse);
+  //   setFilteredData(filteredByEndDate);
+  //   setEndDate(newEndDate);
+  // };
+
+  const handleFilterByGender = (gender: string) => {
+    setFilters((prevFilters) => {
+      const newGenderFilter = prevFilters.gender === gender ? '' : gender;
+
+      return {
+        ...prevFilters,
+        gender: newGenderFilter,
+      };
+    });
   };
 
   const handleActiveFilter = () => {
-    if (checked) {
-      setFilteredData(null);
-    } else {
-      const filteredByActive = subjects.filter(item => item.status === 'Active');
-      setFilteredData(filteredByActive);
-    }
-  }
-
-  const handleStartDateChange = (newStartDate: Date | null) => {
-
-    const startDateToUse = newStartDate || new Date('0000-01-01T00:00:00.000Z');
-
-    const filteredByStartDate = subjects.filter(item => new Date(item.diagnosisDate) > startDateToUse)
-    setFilteredData(filteredByStartDate)
-
-    setStartDate(newStartDate)
-  }
- 
-  const handleEndDateChange = (newEndDate: Date | null) => {
-
-    const endDateToUse = newEndDate || new Date('9999-12-31T23:59:59.999Z');
-
-    const filteredByEndDate = subjects.filter(item => new Date(item.diagnosisDate) < endDateToUse);
-    setFilteredData(filteredByEndDate);
-    setEndDate(newEndDate);
+    setFilters({
+      ...filters,
+      showActiveOnly: !filters.showActiveOnly,
+    });
   };
+
+  const filteredData = subjects.filter(item => {
+    // Check if the item satisfies all the specified filters
+    return (
+      (filters.gender === '' || item.gender === filters.gender) &&
+      (!filters.showActiveOnly || item.status === 'Active')
+    );
+  });
 
   const headers = (
     <Table.Tr>
@@ -90,7 +120,27 @@ function SubjectTable() {
     </Table.Tr>
   );
 
-  const rows = filteredData ? filteredData.map((subject) => (
+  // const rows = filteredData ? filteredData.map((subject) => (
+  //   <Table.Tr key={subject.id}>
+  //     <Table.Td>{subject.id}</Table.Td>
+  //     <Table.Td>{subject.name}</Table.Td>
+  //     <Table.Td>{subject.age}</Table.Td>
+  //     <Table.Td>{subject.gender}</Table.Td>
+  //     <Table.Td>{new Date(subject.diagnosisDate).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</Table.Td>
+  //     <Table.Td>{subject.status}</Table.Td>
+  //   </Table.Tr>
+  // )) : subjects.map((subject) => (
+  //   <Table.Tr key={subject.id}>
+  //     <Table.Td>{subject.id}</Table.Td>
+  //     <Table.Td>{subject.name}</Table.Td>
+  //     <Table.Td>{subject.age}</Table.Td>
+  //     <Table.Td>{subject.gender}</Table.Td>
+  //     <Table.Td>{new Date(subject.diagnosisDate).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</Table.Td>      
+  //     <Table.Td>{subject.status}</Table.Td>
+  //   </Table.Tr>
+  // ));
+
+  const rows = filteredData.map((subject) => (
     <Table.Tr key={subject.id}>
       <Table.Td>{subject.id}</Table.Td>
       <Table.Td>{subject.name}</Table.Td>
@@ -99,15 +149,7 @@ function SubjectTable() {
       <Table.Td>{new Date(subject.diagnosisDate).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</Table.Td>
       <Table.Td>{subject.status}</Table.Td>
     </Table.Tr>
-  )) : subjects.map((subject) => (
-    <Table.Tr key={subject.id}>
-      <Table.Td>{subject.id}</Table.Td>
-      <Table.Td>{subject.name}</Table.Td>
-      <Table.Td>{subject.age}</Table.Td>
-      <Table.Td>{subject.gender}</Table.Td>
-      <Table.Td>{new Date(subject.diagnosisDate).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</Table.Td>      <Table.Td>{subject.status}</Table.Td>
-    </Table.Tr>
-  ));
+  ))
 
   return (
     <>
@@ -124,7 +166,7 @@ function SubjectTable() {
                 checked={checked} 
                 onChange={(event) => setChecked(event.currentTarget.checked)}/>
 
-      <DatePickerInput label="Start Date"
+      {/* <DatePickerInput label="Start Date"
                       placeholder="Start Date"
                       value={startDate}
                       onChange={handleStartDateChange} />
@@ -132,7 +174,7 @@ function SubjectTable() {
       <DatePickerInput label="End Date"
                       placeholder="End Date"
                       value={endDate}
-                      onChange={handleEndDateChange} />
+                      onChange={handleEndDateChange} /> */}
 
                     
 
