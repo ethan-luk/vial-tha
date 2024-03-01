@@ -3,6 +3,7 @@ import SubjectTable from "./SubjectTable"
 import Subject from './models/SubjectInfo';
 import { DatePickerInput } from "@mantine/dates";
 import FilterButton from "./components/FilterButton";
+import DatePicker from "./components/DatePicker";
 
 
 const View = () => {
@@ -66,6 +67,8 @@ const View = () => {
     return (
         <>
             <FilterButton updateFilters={updateFilters} initialFilters={filters}/>
+
+            <DatePicker />
 
             
             <DatePickerInput label="Start Date"

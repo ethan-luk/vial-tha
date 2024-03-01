@@ -1,4 +1,5 @@
 import { Accordion, Checkbox } from "@mantine/core";
+import { DateInput } from "@mantine/dates";
 import React, { useEffect, useState } from "react";
 
 interface FilterProps {
@@ -10,9 +11,11 @@ const FilterAccordion: React.FC<FilterProps> = React.forwardRef(({ updateFilters
 
     const [value, setValue] = useState<string[]>([]);
 
-    const [femaleFilterChecked, setFemaleFilterChecked] = useState(false);
-    const [maleFilterChecked, setMaleFilterChecked] = useState(false);
-    const [isActiveFilterChecked, setIsActiveFilterChecked] = useState(false);
+    const [femaleFilterChecked, setFemaleFilterChecked] = useState(initialFilters.gender === 'Female');
+    const [maleFilterChecked, setMaleFilterChecked] = useState(initialFilters.gender === 'Male');
+    const [isActiveFilterChecked, setIsActiveFilterChecked] = useState(initialFilters.showActiveOnly);
+    const [startDate, setStartDate] = useState<Date | null>(initialFilters.startDate);
+    const [endDate, setEndDate] = useState<Date | null>(initialFilters.endDate);
 
     const [filters, setFilters] = useState(initialFilters);
 
@@ -37,7 +40,7 @@ const FilterAccordion: React.FC<FilterProps> = React.forwardRef(({ updateFilters
           showActiveOnly: !filters.showActiveOnly,
         });
     };
-
+    
     const handleCheckmarkChange = (check: boolean, gender: string) => {
         if (gender == 'Female') {
             setFemaleFilterChecked(check)
@@ -46,6 +49,25 @@ const FilterAccordion: React.FC<FilterProps> = React.forwardRef(({ updateFilters
             setMaleFilterChecked(check)
             setFemaleFilterChecked(false)
         }
+    }
+
+    const handleStartDateChange = (newStartDate: Date | null) => {
+        const startDateToUse = newStartDate || new Date('0000-01-01T00:00:00.000Z');
+        setFilters({
+          ...filters,
+          startDate: startDateToUse
+        })
+        setStartDate(newStartDate)
+    }
+
+    const handleEndDateChange = (newEndDate: Date | null) => {
+        const endDateToUse = newEndDate || new Date('9999-12-31T23:59:59.999Z');
+        setFilters({
+          ...filters,
+          endDate: endDateToUse
+        })
+
+        setEndDate(newEndDate)
     }
 
     return (
@@ -75,6 +97,26 @@ const FilterAccordion: React.FC<FilterProps> = React.forwardRef(({ updateFilters
                                 label='Show Active Only' 
                                 checked={isActiveFilterChecked} 
                                 onChange={(event) => setIsActiveFilterChecked(event.currentTarget.checked)}/>
+                </Accordion.Panel>
+            </Accordion.Item>
+
+            <Accordion.Item value={'StartDate'}>
+                <Accordion.Control>
+                    Date
+                </Accordion.Control>
+                <Accordion.Panel>
+                    <DateInput
+                        value={startDate}
+                        onChange={handleStartDateChange}
+                        label="Start Date"
+                        placeholder="Start Date"
+                    />
+                    <DateInput
+                        value={endDate}
+                        onChange={handleEndDateChange}
+                        label="End Date"
+                        placeholder="End Date"
+                    />
                 </Accordion.Panel>
             </Accordion.Item>
         </Accordion>
