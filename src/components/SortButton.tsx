@@ -48,7 +48,7 @@ const SortButton: React.FC<SortButtonProps> = ({ updateSort, subjects, sortBy })
                 }
             });
         }
-
+        
         updateSort(sortedData);
         setSortAsc(!sortAsc);
       };

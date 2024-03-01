@@ -1,12 +1,12 @@
 import '@mantine/core/styles.css';
 
 import { MantineProvider } from '@mantine/core';
-import SubjectTable from './SubjectTable';
+import View from './View';
 
 export default function App() {
   return (
     <MantineProvider>
-      <SubjectTable />
+      <View />
     </MantineProvider>
   )
 }
