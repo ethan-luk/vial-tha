@@ -39,7 +39,7 @@ const SubjectTable: React.FC<DataProps> = ({ subjectData }) => {
         <Grid.Col span={4}>2</Grid.Col>
         <Grid.Col span={4}>3</Grid.Col>
       </Grid>
-      <Table striped highlightOnHover withTableBorder withColumnBorders style={{ width: '100%' }}>
+      <Table striped highlightOnHover withTableBorder withColumnBorders style={{ width: '90%' }}>
         <Table.Thead>{headers}</Table.Thead>
         <Table.Tbody>{rows}</Table.Tbody>
       </Table>
