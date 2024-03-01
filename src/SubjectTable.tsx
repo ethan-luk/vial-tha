@@ -8,7 +8,6 @@ import '@mantine/dates/styles.css';
 function SubjectTable() {
 
   const [subjects, setSubjects] = useState<Subject[]>([])
-
   const [filters, setFilters] = useState({
     gender: '',
     showActiveOnly: false,
@@ -16,11 +15,7 @@ function SubjectTable() {
     endDate: new Date('9999-12-31T23:59:59.999Z')
   });
 
-  // const [filteredData, setFilteredData] = useState<Subject[] | null>(null);
   const [checked, setChecked] = useState(false);
-
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
 
   // Fetch Data from Endpoint
   useEffect(() => {
@@ -42,48 +37,8 @@ function SubjectTable() {
   }, []);
 
   const sortSubjects = (newValue: Subject[]) => {
-    console.log("pressed sort")
     setSubjects(newValue)
   };
-
-  // const handleFilterByGender = (gender: String) => {
-  //   if (filteredData && filteredData.length > 0) {
-  //     // If filter is active, reset filter
-  //     setFilteredData(null);
-  //   } else {
-  //     // If filter is inactive, apply filter
-  //     const filteredByGender = subjects.filter(item => item.gender === gender);
-  //     setFilteredData(filteredByGender);
-  //   }
-  // };
-
-  // const handleActiveFilter = () => {
-  //   if (checked) {
-  //     setFilteredData(null);
-  //   } else {
-  //     const filteredByActive = subjects.filter(item => item.status === 'Active');
-  //     setFilteredData(filteredByActive);
-  //   }
-  // }
-
-  // const handleStartDateChange = (newStartDate: Date | null) => {
-
-  //   const startDateToUse = newStartDate || new Date('0000-01-01T00:00:00.000Z');
-
-  //   const filteredByStartDate = subjects.filter(item => new Date(item.diagnosisDate) > startDateToUse)
-  //   setFilteredData(filteredByStartDate)
-
-  //   setStartDate(newStartDate)
-  // }
- 
-  // const handleEndDateChange = (newEndDate: Date | null) => {
-
-  //   const endDateToUse = newEndDate || new Date('9999-12-31T23:59:59.999Z');
-
-  //   const filteredByEndDate = subjects.filter(item => new Date(item.diagnosisDate) < endDateToUse);
-  //   setFilteredData(filteredByEndDate);
-  //   setEndDate(newEndDate);
-  // };
 
   const handleFilterByGender = (gender: string) => {
     setFilters((prevFilters) => {
@@ -96,7 +51,7 @@ function SubjectTable() {
     });
   };
 
-  const handleActiveFilter = () => {
+  const handleIsActiveFilter = () => {
     setFilters({
       ...filters,
       showActiveOnly: !filters.showActiveOnly,
@@ -120,7 +75,6 @@ function SubjectTable() {
   }
 
   const filteredData = subjects.filter(item => {
-    // Check if the item satisfies all the specified filters
     return (
       (filters.gender === '' || item.gender === filters.gender) &&
       (!filters.showActiveOnly || item.status === 'Active') &&
@@ -161,7 +115,7 @@ function SubjectTable() {
         Filter by Male
       </Button>
 
-      <Checkbox onClick={() => handleActiveFilter()} 
+      <Checkbox onClick={() => handleIsActiveFilter()} 
                 label='Show Active Only' 
                 checked={checked} 
                 onChange={(event) => setChecked(event.currentTarget.checked)}/>
@@ -173,8 +127,6 @@ function SubjectTable() {
       <DatePickerInput label="End Date"
                       placeholder="End Date"
                       onChange={handleEndDateChange} />
-
-                    
 
       <Table striped highlightOnHover withTableBorder withColumnBorders>
         <Table.Thead>{headers}</Table.Thead>
