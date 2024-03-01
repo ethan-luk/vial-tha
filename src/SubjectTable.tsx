@@ -73,11 +73,9 @@ function SubjectTable() {
   const handleEndDateChange = (newEndDate: Date | null) => {
 
     const endDateToUse = newEndDate || new Date('9999-12-31T23:59:59.999Z');
-    // Your custom logic or function call here
 
     const filteredByEndDate = subjects.filter(item => new Date(item.diagnosisDate) < endDateToUse);
     setFilteredData(filteredByEndDate);
-    // Set the new value
     setEndDate(newEndDate);
   };
 
