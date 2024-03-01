@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { SlArrowUp, SlArrowDown } from "react-icons/sl";
-import Subject from '../models/subject';
+import Subject from '../models/SubjectInfo';
 
 
   
@@ -18,7 +18,7 @@ const SortButton: React.FC<SortButtonProps> = ({ updateSort, subjects, sortBy })
         const sortedData = [...subjects];
         
         // Sort by name
-        if (sortBy === 'name') {
+        if (sortBy === 'Name') {
             sortedData.sort((a, b) => {
                 if (sortAsc) {
                     return a.name.localeCompare(b.name);

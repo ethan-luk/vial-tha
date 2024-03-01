@@ -1,7 +1,7 @@
-const SortOptions = {
-    Name: 'name',
-    Age: 'age',
+const SortOptionEnum = {
+    Name: 'Name',
+    Age: 'Age',
     DiagnosisDate: 'Diagnosis Date',
 }
 
-export default SortOptions
+export default SortOptionEnum

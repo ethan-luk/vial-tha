@@ -1,4 +1,4 @@
-interface Subject {
+interface SubjectInfo {
     id: string;
     name: string;
     age: number;
@@ -7,4 +7,4 @@ interface Subject {
     status: string;
 }
 
-export default Subject
+export default SubjectInfo

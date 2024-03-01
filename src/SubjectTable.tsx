@@ -1,12 +1,21 @@
 import { useEffect, useState } from 'react';
-import Subject from './models/subject';
-import { Table } from '@mantine/core';
+import Subject from './models/SubjectInfo';
+import { Button, Table, Checkbox } from '@mantine/core';
+import { DatePickerInput } from '@mantine/dates';
 import SortButton from './components/SortButton';
+import '@mantine/dates/styles.css';
+
 
 
 function SubjectTable() {
 
   const [subjects, setSubjects] = useState<Subject[]>([])
+
+  const [filteredData, setFilteredData] = useState<Subject[] | null>(null);
+  const [checked, setChecked] = useState(false);
+
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
 
   // Fetch Data from Endpoint
   useEffect(() => {
@@ -31,10 +40,51 @@ function SubjectTable() {
     setSubjects(newValue)
   };
 
+  const handleFilterByGender = (gender: String) => {
+    if (filteredData && filteredData.length > 0) {
+      // If filter is active, reset filter
+      setFilteredData(null);
+    } else {
+      // If filter is inactive, apply filter
+      const filteredByGender = subjects.filter(item => item.gender === gender);
+      setFilteredData(filteredByGender);
+    }
+  };
+
+  const handleActiveFilter = () => {
+    if (checked) {
+      setFilteredData(null);
+    } else {
+      const filteredByActive = subjects.filter(item => item.status === 'Active');
+      setFilteredData(filteredByActive);
+    }
+  }
+
+  const handleStartDateChange = (newStartDate: Date | null) => {
+
+    const startDateToUse = newStartDate || new Date('0000-01-01T00:00:00.000Z');
+
+    const filteredByStartDate = subjects.filter(item => new Date(item.diagnosisDate) > startDateToUse)
+    setFilteredData(filteredByStartDate)
+
+    setStartDate(newStartDate)
+  }
+ 
+  const handleEndDateChange = (newEndDate: Date | null) => {
+
+    const endDateToUse = newEndDate || new Date('9999-12-31T23:59:59.999Z');
+    // Your custom logic or function call here
+
+    const filteredByEndDate = subjects.filter(item => new Date(item.diagnosisDate) < endDateToUse);
+    setFilteredData(filteredByEndDate);
+    // Set the new value
+    setEndDate(newEndDate);
+  };
+
   const headers = (
     <Table.Tr>
       <Table.Th>Subject Id</Table.Th>
-      <Table.Th>Name <SortButton updateSort={sortSubjects} subjects={subjects} sortBy={'name'} /></Table.Th>
+      <Table.Th>Name <SortButton updateSort={sortSubjects} subjects={subjects} sortBy={'Name'} /></Table.Th>
       <Table.Th>Age <SortButton updateSort={sortSubjects} subjects={subjects} sortBy={'Age'} /></Table.Th>
       <Table.Th>Gender</Table.Th>
       <Table.Th>Diagnosis Date <SortButton updateSort={sortSubjects} subjects={subjects} sortBy={'Diagnosis Date'} /></Table.Th>
@@ -42,19 +92,52 @@ function SubjectTable() {
     </Table.Tr>
   );
 
-  const rows = subjects.map((subject) => (
+  const rows = filteredData ? filteredData.map((subject) => (
     <Table.Tr key={subject.id}>
       <Table.Td>{subject.id}</Table.Td>
       <Table.Td>{subject.name}</Table.Td>
       <Table.Td>{subject.age}</Table.Td>
       <Table.Td>{subject.gender}</Table.Td>
-      <Table.Td>{subject.diagnosisDate}</Table.Td>
+      <Table.Td>{new Date(subject.diagnosisDate).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</Table.Td>
       <Table.Td>{subject.status}</Table.Td>
+    </Table.Tr>
+  )) : subjects.map((subject) => (
+    <Table.Tr key={subject.id}>
+      <Table.Td>{subject.id}</Table.Td>
+      <Table.Td>{subject.name}</Table.Td>
+      <Table.Td>{subject.age}</Table.Td>
+      <Table.Td>{subject.gender}</Table.Td>
+      <Table.Td>{new Date(subject.diagnosisDate).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</Table.Td>      <Table.Td>{subject.status}</Table.Td>
     </Table.Tr>
   ));
 
   return (
     <>
+      <Button onClick={() => handleFilterByGender('Female')}>
+        Filter by Female
+      </Button>
+
+      <Button onClick={() => handleFilterByGender('Male')}>
+        Filter by Male
+      </Button>
+
+      <Checkbox onClick={() => handleActiveFilter()} 
+                label='Show Active Only' 
+                checked={checked} 
+                onChange={(event) => setChecked(event.currentTarget.checked)}/>
+
+      <DatePickerInput label="Start Date"
+                      placeholder="Start Date"
+                      value={startDate}
+                      onChange={handleStartDateChange} />
+      
+      <DatePickerInput label="End Date"
+                      placeholder="End Date"
+                      value={endDate}
+                      onChange={handleEndDateChange} />
+
+                    
+
       <Table striped highlightOnHover withTableBorder withColumnBorders>
         <Table.Thead>{headers}</Table.Thead>
         <Table.Tbody>{rows}</Table.Tbody>
