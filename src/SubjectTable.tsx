@@ -11,7 +11,9 @@ function SubjectTable() {
 
   const [filters, setFilters] = useState({
     gender: '',
-    showActiveOnly: false
+    showActiveOnly: false,
+    startDate: new Date('0000-01-01T00:00:00.000Z'),
+    endDate: new Date('9999-12-31T23:59:59.999Z')
   });
 
   // const [filteredData, setFilteredData] = useState<Subject[] | null>(null);
@@ -101,11 +103,29 @@ function SubjectTable() {
     });
   };
 
+  const handleStartDateChange = (newStartDate: Date | null) => {
+    const startDateToUse = newStartDate || new Date('0000-01-01T00:00:00.000Z');
+    setFilters({
+      ...filters,
+      startDate: startDateToUse
+    })
+  }
+
+  const handleEndDateChange = (newEndDate: Date | null) => {
+    const endDateToUse = newEndDate || new Date('9999-12-31T23:59:59.999Z');
+    setFilters({
+      ...filters,
+      endDate: endDateToUse
+    })
+  }
+
   const filteredData = subjects.filter(item => {
     // Check if the item satisfies all the specified filters
     return (
       (filters.gender === '' || item.gender === filters.gender) &&
-      (!filters.showActiveOnly || item.status === 'Active')
+      (!filters.showActiveOnly || item.status === 'Active') &&
+      (filters.startDate < new Date(item.diagnosisDate)) && 
+      (filters.endDate > new Date(item.diagnosisDate))
     );
   });
 
@@ -119,26 +139,6 @@ function SubjectTable() {
       <Table.Th>Status</Table.Th>
     </Table.Tr>
   );
-
-  // const rows = filteredData ? filteredData.map((subject) => (
-  //   <Table.Tr key={subject.id}>
-  //     <Table.Td>{subject.id}</Table.Td>
-  //     <Table.Td>{subject.name}</Table.Td>
-  //     <Table.Td>{subject.age}</Table.Td>
-  //     <Table.Td>{subject.gender}</Table.Td>
-  //     <Table.Td>{new Date(subject.diagnosisDate).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</Table.Td>
-  //     <Table.Td>{subject.status}</Table.Td>
-  //   </Table.Tr>
-  // )) : subjects.map((subject) => (
-  //   <Table.Tr key={subject.id}>
-  //     <Table.Td>{subject.id}</Table.Td>
-  //     <Table.Td>{subject.name}</Table.Td>
-  //     <Table.Td>{subject.age}</Table.Td>
-  //     <Table.Td>{subject.gender}</Table.Td>
-  //     <Table.Td>{new Date(subject.diagnosisDate).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</Table.Td>      
-  //     <Table.Td>{subject.status}</Table.Td>
-  //   </Table.Tr>
-  // ));
 
   const rows = filteredData.map((subject) => (
     <Table.Tr key={subject.id}>
@@ -166,15 +166,13 @@ function SubjectTable() {
                 checked={checked} 
                 onChange={(event) => setChecked(event.currentTarget.checked)}/>
 
-      {/* <DatePickerInput label="Start Date"
+      <DatePickerInput label="Start Date"
                       placeholder="Start Date"
-                      value={startDate}
                       onChange={handleStartDateChange} />
       
       <DatePickerInput label="End Date"
                       placeholder="End Date"
-                      value={endDate}
-                      onChange={handleEndDateChange} /> */}
+                      onChange={handleEndDateChange} />
 
                     
 
