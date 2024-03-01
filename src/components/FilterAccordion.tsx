@@ -6,7 +6,9 @@ interface FilterProps {
     initialFilters: { gender: string, showActiveOnly: boolean, startDate: Date, endDate: Date }
 }
 
-const GenderAccordion: React.FC<FilterProps> = React.forwardRef(({ updateFilters, initialFilters }, _ ) => {
+const FilterAccordion: React.FC<FilterProps> = React.forwardRef(({ updateFilters, initialFilters }, _ ) => {
+
+    const [value, setValue] = useState<string[]>([]);
 
     const [femaleFilterChecked, setFemaleFilterChecked] = useState(false);
     const [maleFilterChecked, setMaleFilterChecked] = useState(false);
@@ -47,7 +49,7 @@ const GenderAccordion: React.FC<FilterProps> = React.forwardRef(({ updateFilters
     }
 
     return (
-        <Accordion>
+        <Accordion multiple value={value} onChange={setValue}>
             <Accordion.Item value={'Gender'}>
                 <Accordion.Control>
                     Gender
@@ -70,7 +72,7 @@ const GenderAccordion: React.FC<FilterProps> = React.forwardRef(({ updateFilters
                 </Accordion.Control>
                 <Accordion.Panel>
                     <Checkbox onClick={() => handleIsActiveFilter()} 
-                                label='Status' 
+                                label='Show Active Only' 
                                 checked={isActiveFilterChecked} 
                                 onChange={(event) => setIsActiveFilterChecked(event.currentTarget.checked)}/>
                 </Accordion.Panel>
@@ -79,4 +81,4 @@ const GenderAccordion: React.FC<FilterProps> = React.forwardRef(({ updateFilters
     );
 });
 
-export default GenderAccordion
+export default FilterAccordion

@@ -1,6 +1,6 @@
 import { Button, Menu } from "@mantine/core";
 import { useEffect, useState } from "react";
-import GenderAccordion from "./FilterAccordion";
+import FilterAccordion from "./FilterAccordion";
 
 interface FilterProps {
     updateFilters: (filters: {gender: string, showActiveOnly: boolean, startDate: Date, endDate: Date}) => void;
@@ -24,7 +24,7 @@ const FilterButton: React.FC<FilterProps> = ({ updateFilters, initialFilters }) 
           <Menu.Dropdown>
             <Menu.Label>Filter By:</Menu.Label>
 
-            <Menu.Item component={GenderAccordion} updateFilters={setFilters} initialFilters={filters} />
+            <Menu.Item component={FilterAccordion} updateFilters={setFilters} initialFilters={filters} />
 
             <Menu.Divider />
       

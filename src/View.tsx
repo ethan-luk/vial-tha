@@ -36,7 +36,7 @@ const View = () => {
 
     const updateFilters = (filters: {gender: string, showActiveOnly: boolean, startDate: Date, endDate: Date}) => {
         setFilters(filters)
-      }
+    }
     
       const handleStartDateChange = (newStartDate: Date | null) => {
         const startDateToUse = newStartDate || new Date('0000-01-01T00:00:00.000Z');
@@ -54,14 +54,14 @@ const View = () => {
         })
       }
     
-      const filteredData = subjects.filter(item => {
+    const filteredData = subjects.filter(item => {
         return (
-          (filters.gender === '' || item.gender === filters.gender) &&
-          (!filters.showActiveOnly || item.status === 'Active') &&
-          (filters.startDate < new Date(item.diagnosisDate)) && 
-          (filters.endDate > new Date(item.diagnosisDate))
+            (filters.gender === '' || item.gender === filters.gender) &&
+            (!filters.showActiveOnly || item.status === 'Active') &&
+            (filters.startDate < new Date(item.diagnosisDate)) && 
+            (filters.endDate > new Date(item.diagnosisDate))
         );
-      });
+    });
     
     return (
         <>
