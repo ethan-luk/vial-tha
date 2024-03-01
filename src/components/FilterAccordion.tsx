@@ -14,8 +14,8 @@ const FilterAccordion: React.FC<FilterProps> = React.forwardRef(({ updateFilters
     const [femaleFilterChecked, setFemaleFilterChecked] = useState(initialFilters.gender === 'Female');
     const [maleFilterChecked, setMaleFilterChecked] = useState(initialFilters.gender === 'Male');
     const [isActiveFilterChecked, setIsActiveFilterChecked] = useState(initialFilters.showActiveOnly);
-    const [startDate, setStartDate] = useState<Date | null>(initialFilters.startDate);
-    const [endDate, setEndDate] = useState<Date | null>(initialFilters.endDate);
+    const [startDate, setStartDate] = useState<Date | null>(initialFilters.startDate.getTime() == new Date('0000-01-01T00:00:00.000Z').getTime() ? null : initialFilters.startDate);
+    const [endDate, setEndDate] = useState<Date | null>(initialFilters.endDate.getTime() == new Date('9999-12-31T23:59:59.999Z').getTime() ? null : initialFilters.endDate);
 
     const [filters, setFilters] = useState(initialFilters);
 
@@ -106,12 +106,14 @@ const FilterAccordion: React.FC<FilterProps> = React.forwardRef(({ updateFilters
                 </Accordion.Control>
                 <Accordion.Panel>
                     <DateInput
+                        clearable
                         value={startDate}
                         onChange={handleStartDateChange}
                         label="Start Date"
                         placeholder="Start Date"
                     />
                     <DateInput
+                        clearable
                         value={endDate}
                         onChange={handleEndDateChange}
                         label="End Date"

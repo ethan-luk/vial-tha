@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
-import SubjectTable from "./SubjectTable"
+import SubjectTable from "./components/SubjectTable"
 import Subject from './models/SubjectInfo';
-import { DatePickerInput } from "@mantine/dates";
 import FilterButton from "./components/FilterButton";
-import DatePicker from "./components/DatePicker";
 
 
 const View = () => {
@@ -39,22 +37,6 @@ const View = () => {
         setFilters(filters)
     }
     
-      const handleStartDateChange = (newStartDate: Date | null) => {
-        const startDateToUse = newStartDate || new Date('0000-01-01T00:00:00.000Z');
-        setFilters({
-          ...filters,
-          startDate: startDateToUse
-        })
-      }
-    
-      const handleEndDateChange = (newEndDate: Date | null) => {
-        const endDateToUse = newEndDate || new Date('9999-12-31T23:59:59.999Z');
-        setFilters({
-          ...filters,
-          endDate: endDateToUse
-        })
-      }
-    
     const filteredData = subjects.filter(item => {
         return (
             (filters.gender === '' || item.gender === filters.gender) &&
@@ -67,18 +49,6 @@ const View = () => {
     return (
         <>
             <FilterButton updateFilters={updateFilters} initialFilters={filters}/>
-
-            <DatePicker />
-
-            
-            <DatePickerInput label="Start Date"
-                            placeholder="Start Date"
-                            onChange={handleStartDateChange} />
-            
-            <DatePickerInput label="End Date"
-                            placeholder="End Date"
-                            onChange={handleEndDateChange} />
-            
             <SubjectTable subjectData={filteredData}/>
         </>
     )

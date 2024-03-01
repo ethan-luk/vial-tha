@@ -1,10 +1,13 @@
 import { Table } from '@mantine/core';
 import '@mantine/dates/styles.css';
-import SubjectInfo from './models/SubjectInfo';
+import SubjectInfo from '../models/SubjectInfo';
+import { Grid } from '@mantine/core';
+
 
 interface DataProps {
     subjectData: SubjectInfo[]
 }
+
 const SubjectTable: React.FC<DataProps> = ({ subjectData }) => {
 
   const headers = (
@@ -31,7 +34,12 @@ const SubjectTable: React.FC<DataProps> = ({ subjectData }) => {
 
   return (
     <>
-      <Table striped highlightOnHover withTableBorder withColumnBorders>
+      <Grid>
+        <Grid.Col span={4}>1</Grid.Col>
+        <Grid.Col span={4}>2</Grid.Col>
+        <Grid.Col span={4}>3</Grid.Col>
+      </Grid>
+      <Table striped highlightOnHover withTableBorder withColumnBorders style={{ width: '100%' }}>
         <Table.Thead>{headers}</Table.Thead>
         <Table.Tbody>{rows}</Table.Tbody>
       </Table>
