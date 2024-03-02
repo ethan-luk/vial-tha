@@ -1,15 +1,19 @@
 import { useState, useEffect } from "react";
 import SubjectTable from "./components/SubjectTable"
 import Subject from './models/SubjectInfo';
-import FilterButton from "./components/FilterButton";
+import FilterButton from "./components/FilterMap";
+import { Grid } from "@mantine/core";
+import SubjectInfo from "./models/SubjectInfo";
+import FilterOptions from "./models/FilterOptions";
 
 
 const View = () => {
 
     const [subjects, setSubjects] = useState<Subject[]>([])
-    const [filters, setFilters] = useState({
+    const [filters, setFilters] = useState<FilterOptions>({
       gender: '',
       showActiveOnly: false,
+      ageRange: [0, Number.MAX_VALUE],
       startDate: new Date('0000-01-01T00:00:00.000Z'),
       endDate: new Date('9999-12-31T23:59:59.999Z')
     });
@@ -33,7 +37,10 @@ const View = () => {
       fetchData();
     }, []);
 
-    const updateFilters = (filters: {gender: string, showActiveOnly: boolean, startDate: Date, endDate: Date}) => {
+    const handleSort = (newSort: SubjectInfo[]) => {
+        setSubjects(newSort)
+    }
+    const updateFilters = (filters: FilterOptions) => {
         setFilters(filters)
     }
     
@@ -48,8 +55,20 @@ const View = () => {
     
     return (
         <>
-            <FilterButton updateFilters={updateFilters} initialFilters={filters}/>
-            <SubjectTable subjectData={filteredData}/>
+            <Grid style={{ padding: '80px' }}>
+                <Grid.Col span={1} style={{ backgroundColor: 'red' }}>
+                    <FilterButton updateFilters={updateFilters} initialFilters={filters}/>
+                </Grid.Col>
+                <Grid.Col span={1} style={{ backgroundColor: 'blue' }}>
+                    { filters.gender != '' ? <p>filter on gender {filters.gender}</p>: null }
+                </Grid.Col>
+                <Grid.Col span={8} style={{ backgroundColor: 'green' }}>
+                    <p>asdf</p>
+                </Grid.Col>
+                <Grid.Col span={12}>
+                    <SubjectTable subjects={filteredData} updateSort={handleSort}/>
+                </Grid.Col>
+            </Grid>
         </>
     )
 }

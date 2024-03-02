@@ -1,10 +1,11 @@
 import { Accordion, Checkbox } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import React, { useEffect, useState } from "react";
+import FilterOptions from "../models/FilterOptions";
 
 interface FilterProps {
-    updateFilters: (filters: { gender: string, showActiveOnly: boolean, startDate: Date, endDate: Date }) => void;
-    initialFilters: { gender: string, showActiveOnly: boolean, startDate: Date, endDate: Date }
+    updateFilters: (filters: FilterOptions) => void;
+    initialFilters: FilterOptions
 }
 
 const FilterAccordion: React.FC<FilterProps> = React.forwardRef(({ updateFilters, initialFilters }, _ ) => {
@@ -13,8 +14,7 @@ const FilterAccordion: React.FC<FilterProps> = React.forwardRef(({ updateFilters
 
     const [femaleFilterChecked, setFemaleFilterChecked] = useState(initialFilters.gender === 'Female');
     const [maleFilterChecked, setMaleFilterChecked] = useState(initialFilters.gender === 'Male');
-    const [isActiveFilterChecked, setIsActiveFilterChecked] = useState(initialFilters.showActiveOnly);
-    const [startDate, setStartDate] = useState<Date | null>(initialFilters.startDate.getTime() == new Date('0000-01-01T00:00:00.000Z').getTime() ? null : initialFilters.startDate);
+    const [isActiveFilterChecked, setIsActiveFilterChecked] = useState(initialFilters.showActiveOnly);    const [startDate, setStartDate] = useState<Date | null>(initialFilters.startDate.getTime() == new Date('0000-01-01T00:00:00.000Z').getTime() ? null : initialFilters.startDate);
     const [endDate, setEndDate] = useState<Date | null>(initialFilters.endDate.getTime() == new Date('9999-12-31T23:59:59.999Z').getTime() ? null : initialFilters.endDate);
 
     const [filters, setFilters] = useState(initialFilters);

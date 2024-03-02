@@ -1,29 +1,32 @@
 import { Table } from '@mantine/core';
 import '@mantine/dates/styles.css';
 import SubjectInfo from '../models/SubjectInfo';
-import { Grid } from '@mantine/core';
+import SortButton from './SortButton';
 
 
 interface DataProps {
-    subjectData: SubjectInfo[]
+    subjects: SubjectInfo[]
+    updateSort: (sortedSubjects: SubjectInfo[]) => void;
 }
 
-const SubjectTable: React.FC<DataProps> = ({ subjectData }) => {
+const SubjectTable: React.FC<DataProps> = ({ subjects, updateSort }) => {
+
+  const handleUpdateSort = (newData: SubjectInfo[]) => {
+    updateSort(newData)
+  }
 
   const headers = (
     <Table.Tr>
-      <Table.Th>Subject Id</Table.Th>
-      <Table.Th>Name</Table.Th>
-      <Table.Th>Age</Table.Th>
+      <Table.Th>Name <SortButton updateSort={handleUpdateSort} subjects={subjects} sortBy='Name'/></Table.Th>
+      <Table.Th>Age <SortButton updateSort={handleUpdateSort} subjects={subjects} sortBy='Age'/></Table.Th>
       <Table.Th>Gender</Table.Th>
-      <Table.Th>Diagnosis Date</Table.Th>
+      <Table.Th>Diagnosis Date <SortButton updateSort={handleUpdateSort} subjects={subjects} sortBy='Diagnosis Date'/></Table.Th>
       <Table.Th>Status</Table.Th>
     </Table.Tr>
   );
 
-  const rows = subjectData.map((subject) => (
+  const rows = subjects.map((subject) => (
     <Table.Tr key={subject.id}>
-      <Table.Td>{subject.id}</Table.Td>
       <Table.Td>{subject.name}</Table.Td>
       <Table.Td>{subject.age}</Table.Td>
       <Table.Td>{subject.gender}</Table.Td>
@@ -34,12 +37,7 @@ const SubjectTable: React.FC<DataProps> = ({ subjectData }) => {
 
   return (
     <>
-      <Grid>
-        <Grid.Col span={4}>1</Grid.Col>
-        <Grid.Col span={4}>2</Grid.Col>
-        <Grid.Col span={4}>3</Grid.Col>
-      </Grid>
-      <Table striped highlightOnHover withTableBorder withColumnBorders style={{ width: '90%' }}>
+      <Table striped highlightOnHover withTableBorder withColumnBorders>
         <Table.Thead>{headers}</Table.Thead>
         <Table.Tbody>{rows}</Table.Tbody>
       </Table>

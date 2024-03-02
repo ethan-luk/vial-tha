@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { SlArrowUp, SlArrowDown } from "react-icons/sl";
-import Subject from '../models/SubjectInfo';
+import SubjectInfo from '../models/SubjectInfo';
 
 
   
 interface SortButtonProps {
-    updateSort: (sortedSubjects: Subject[]) => void;
-    subjects: Subject[]
+    updateSort: (sortedSubjects: SubjectInfo[]) => void;
+    subjects: SubjectInfo[]
     sortBy: string
   }
 
@@ -55,7 +55,12 @@ const SortButton: React.FC<SortButtonProps> = ({ updateSort, subjects, sortBy })
 
     return (
         <>
-            {sortAsc ? <SlArrowDown onClick={handleSort} /> : <SlArrowUp onClick={handleSort} />}
+            {
+                sortAsc ? <SlArrowDown onClick={handleSort} 
+                                        style={{ paddingTop: '5px', float: 'right' }}/> : 
+                          <SlArrowUp onClick={handleSort} 
+                                        style={{ paddingTop: '5px', float: 'right' }} />
+            }
         </>
     );    
 };

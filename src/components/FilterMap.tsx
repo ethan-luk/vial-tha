@@ -2,11 +2,12 @@ import { Button, Menu } from "@mantine/core";
 import { useEffect, useState } from "react";
 import FilterAccordion from "./FilterAccordion";
 import { SlClose } from "react-icons/sl";
+import FilterOptions from "../models/FilterOptions";
 
 
 interface FilterProps {
-    updateFilters: (filters: {gender: string, showActiveOnly: boolean, startDate: Date, endDate: Date}) => void;
-    initialFilters: { gender: string, showActiveOnly: boolean, startDate: Date, endDate: Date }
+    updateFilters: (filters: FilterOptions) => void;
+    initialFilters: FilterOptions
 }
 
 const FilterButton: React.FC<FilterProps> = ({ updateFilters, initialFilters }) =>  {
@@ -18,9 +19,9 @@ const FilterButton: React.FC<FilterProps> = ({ updateFilters, initialFilters }) 
     }, [filters])
 
     return (
-        <Menu shadow="md" width={400} closeOnClickOutside={false}>
+        <Menu shadow="md" width={400} closeOnClickOutside={false} position='bottom-start'>
           <Menu.Target>
-            <Button>Toggle menu</Button>
+            <Button>Filters</Button>
           </Menu.Target>
       
           <Menu.Dropdown>
