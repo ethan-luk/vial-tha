@@ -10,13 +10,17 @@ interface FilterProps {
     initialFilters: FilterOptions
 }
 
-const FilterButton: React.FC<FilterProps> = ({ updateFilters, initialFilters }) =>  {
+const FilterMap: React.FC<FilterProps> = ({ updateFilters, initialFilters }) =>  {
 
     const [filters, setFilters] = useState(initialFilters);
 
     useEffect(() => {
         updateFilters(filters)
     }, [filters])
+
+    useEffect(() => {
+        setFilters(initialFilters);
+    }, [initialFilters]);
 
     return (
         <Menu shadow="md" width={400} closeOnClickOutside={false} position='bottom-start'>
@@ -25,12 +29,12 @@ const FilterButton: React.FC<FilterProps> = ({ updateFilters, initialFilters }) 
           </Menu.Target>
       
           <Menu.Dropdown>
-            <Menu.Label>Filter By: </Menu.Label>
+            <Menu.Label>Filter By:</Menu.Label>
             <Menu.Item closeMenuOnClick={true}><SlClose /></Menu.Item>
             <Menu.Item component={FilterAccordion} updateFilters={setFilters} initialFilters={filters} />
           </Menu.Dropdown>
         </Menu>
-      );
+    );
 }
 
-export default FilterButton
+export default FilterMap
