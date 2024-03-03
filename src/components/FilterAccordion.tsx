@@ -1,34 +1,30 @@
 import { Accordion, Checkbox, RangeSlider, RangeSliderValue } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import React, { useEffect, useState } from "react";
-import FilterOptions from "../models/FilterOptions";
+import { FilterOptions , FilterProps } from "../models/FilterOptions";
 
-interface FilterProps {
-    updateFilters: (filters: FilterOptions) => void;
-    initialFilters: FilterOptions
-}
 
-const FilterAccordion: React.FC<FilterProps> = React.forwardRef(({ updateFilters, initialFilters }, _ ) => {
+const FilterAccordion: React.FC<FilterProps> = React.forwardRef(({ updateFilters, currentFilters }, _ ) => {
 
     const [value, setValue] = useState<string[]>([]);
 
-    const [femaleFilterChecked, setFemaleFilterChecked] = useState(initialFilters.gender === 'Female');
-    const [maleFilterChecked, setMaleFilterChecked] = useState(initialFilters.gender === 'Male');
-    const [isActiveFilterChecked, setIsActiveFilterChecked] = useState(initialFilters.showActiveOnly);    
+    const [femaleFilterChecked, setFemaleFilterChecked] = useState(currentFilters.gender === 'Female');
+    const [maleFilterChecked, setMaleFilterChecked] = useState(currentFilters.gender === 'Male');
+    const [isActiveFilterChecked, setIsActiveFilterChecked] = useState(currentFilters.showActiveOnly);    
     
-    const [ageRange, setAgeRange] = useState<[number, number]>(initialFilters.ageRange)
-    const [startDate, setStartDate] = useState<Date | null>(initialFilters.startDate.getTime() == new Date('0000-01-01T00:00:00.000Z').getTime() ? null : initialFilters.startDate);
-    const [endDate, setEndDate] = useState<Date | null>(initialFilters.endDate.getTime() == new Date('9999-12-31T23:59:59.999Z').getTime() ? null : initialFilters.endDate);
+    const [ageRange, setAgeRange] = useState<[number, number]>(currentFilters.ageRange)
+    const [startDate, setStartDate] = useState<Date | null>(currentFilters.startDate.getTime() == new Date('0000-01-01T00:00:00.000Z').getTime() ? null : currentFilters.startDate);
+    const [endDate, setEndDate] = useState<Date | null>(currentFilters.endDate.getTime() == new Date('9999-12-31T23:59:59.999Z').getTime() ? null : currentFilters.endDate);
 
-    const [filters, setFilters] = useState<FilterOptions>(initialFilters);
+    const [filters, setFilters] = useState<FilterOptions>(currentFilters);
 
     useEffect(() => {
         updateFilters(filters)
     }, [filters])
 
     useEffect(() => {
-        setFilters(initialFilters);
-    }, [initialFilters]);
+        setFilters(currentFilters);
+    }, [currentFilters]);
 
     const handleFilterByGender = (gender: string) => {
         setFilters((prevFilters) => {

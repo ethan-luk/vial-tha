@@ -6,4 +6,9 @@ interface FilterOptions {
     endDate: Date
 }
 
-export default FilterOptions
+interface FilterProps {
+    updateFilters: (filters: FilterOptions) => void;
+    currentFilters: FilterOptions
+}
+
+export type { FilterOptions, FilterProps }

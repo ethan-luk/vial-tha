@@ -2,25 +2,19 @@ import { Button, Menu } from "@mantine/core";
 import { useEffect, useState } from "react";
 import FilterAccordion from "./FilterAccordion";
 import { SlClose } from "react-icons/sl";
-import FilterOptions from "../models/FilterOptions";
+import { FilterProps } from "../models/FilterOptions";
 
+const FilterMap: React.FC<FilterProps> = ({ updateFilters, currentFilters }) =>  {
 
-interface FilterProps {
-    updateFilters: (filters: FilterOptions) => void;
-    initialFilters: FilterOptions
-}
-
-const FilterMap: React.FC<FilterProps> = ({ updateFilters, initialFilters }) =>  {
-
-    const [filters, setFilters] = useState(initialFilters);
+    const [filters, setFilters] = useState(currentFilters);
 
     useEffect(() => {
         updateFilters(filters)
     }, [filters])
 
     useEffect(() => {
-        setFilters(initialFilters);
-    }, [initialFilters]);
+        setFilters(currentFilters);
+    }, [currentFilters]);
 
     return (
         <Menu shadow="md" width={400} closeOnClickOutside={false} position='bottom-start'>
@@ -31,7 +25,7 @@ const FilterMap: React.FC<FilterProps> = ({ updateFilters, initialFilters }) => 
           <Menu.Dropdown>
             <Menu.Label>Filter By:</Menu.Label>
             <Menu.Item closeMenuOnClick={true}><SlClose /></Menu.Item>
-            <Menu.Item component={FilterAccordion} updateFilters={setFilters} initialFilters={filters} />
+            <Menu.Item component={FilterAccordion} updateFilters={setFilters} currentFilters={filters} />
           </Menu.Dropdown>
         </Menu>
     );
