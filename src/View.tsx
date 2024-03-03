@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import SubjectTable from "./components/SubjectTable"
 import Subject from './models/SubjectInfo';
 import FilterMap from "./components/FilterMap";
-import { Checkbox, Grid, Title } from "@mantine/core";
+import { Checkbox, Flex, Grid, Title } from "@mantine/core";
 import SubjectInfo from "./models/SubjectInfo";
 import { FilterOptions } from "./models/FilterOptions";
 import ActiveFilterElements from "./components/ActiveFilterElements";
@@ -80,20 +80,29 @@ const View = () => {
                     <Title>Subjects</Title>
                 </Grid.Col>
                 <Grid.Col span={12} />
-                <Grid.Col span={12} />
                 <Grid.Col span={10}>
                     <FilterMap updateFilters={updateFilters} currentFilters={filters} activeFilters={activeFilters} />
                 </Grid.Col>
-                <Grid.Col span={2}>
-                    <Checkbox onClick={() => handleIsActiveFilter()} 
-                                label="Show Active Only" 
-                                checked={isActiveFilterChecked} 
-                                onChange={(event) => setIsActiveFilterChecked(event.currentTarget.checked)}/>
-                </Grid.Col>
+
                 <Grid.Col span={10}>
                     <ActiveFilterElements updateFilters={updateFilters} updateActiveFilters={updateActiveFilters} currentFilters={filters}/>
                 </Grid.Col>
-                <Grid.Col span={12} />
+                <Grid.Col span={2}>
+                <Flex
+                    mih={30}
+                    justify="flex-end"
+                    align="flex-end"
+                    direction="row"
+                    wrap="wrap"
+                    >
+                    <Checkbox onClick={() => handleIsActiveFilter()} 
+                                label='Show Active Only'
+                                variant='outline'
+                                color='orange'
+                                checked={isActiveFilterChecked} 
+                                onChange={(event) => setIsActiveFilterChecked(event.currentTarget.checked)}/>
+                </Flex>
+                </Grid.Col>
                 <Grid.Col span={12}>
                     <SubjectTable subjects={filteredData} updateSort={handleSort}/>
                 </Grid.Col>
