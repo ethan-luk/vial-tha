@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import SubjectTable from "./components/SubjectTable"
 import Subject from './models/SubjectInfo';
 import FilterMap from "./components/FilterMap";
-import { Grid } from "@mantine/core";
+import { Grid, Title } from "@mantine/core";
 import SubjectInfo from "./models/SubjectInfo";
 import { FilterOptions } from "./models/FilterOptions";
 import ActiveFilterElements from "./components/ActiveFilterElements";
@@ -58,7 +58,10 @@ const View = () => {
 
     return (
         <>
-            <Grid style={{ padding: '80px' }} align-items='center'>
+            <Grid style={{ paddingLeft: '80px', paddingTop: '60px', paddingRight: '80px' }} align-items='center'>
+                <Grid.Col span={12}>
+                    <Title>Subjects</Title>
+                </Grid.Col>
                 <Grid.Col span={2}>
                     <FilterMap updateFilters={updateFilters} currentFilters={filters}/>
                 </Grid.Col>

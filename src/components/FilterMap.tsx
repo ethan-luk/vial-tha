@@ -1,8 +1,9 @@
-import { Button, Menu } from "@mantine/core";
+import { Menu } from "@mantine/core";
 import { useEffect, useState } from "react";
 import FilterAccordion from "./FilterAccordion";
 import { SlClose } from "react-icons/sl";
 import { FilterProps } from "../models/FilterOptions";
+import FilterButton from "./FilterButton";
 
 const FilterMap: React.FC<FilterProps> = ({ updateFilters, currentFilters }) =>  {
 
@@ -19,7 +20,7 @@ const FilterMap: React.FC<FilterProps> = ({ updateFilters, currentFilters }) => 
     return (
         <Menu shadow="md" width={400} closeOnClickOutside={false} position='bottom-start'>
           <Menu.Target>
-            <Button>Filters</Button>
+            <FilterButton />
           </Menu.Target>
       
           <Menu.Dropdown>

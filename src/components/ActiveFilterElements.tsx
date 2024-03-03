@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { FilterProps } from "../models/FilterOptions"
-import { Button } from "@mantine/core";
+import { Chip, Group, rem } from "@mantine/core";
+import { IconX } from '@tabler/icons-react';
+
 
 const ActiveFilterElements: React.FC<FilterProps> = ({ updateFilters, currentFilters }) =>  {
 
@@ -22,11 +24,11 @@ const ActiveFilterElements: React.FC<FilterProps> = ({ updateFilters, currentFil
         }
 
         if (currentFilters.startDate.getTime() != new Date('0000-01-01T00:00:00.000Z').getTime()) {
-            activeFiltersArray.push({ 'Start Date': currentFilters.startDate.toDateString() })
+            activeFiltersArray.push({ 'From': currentFilters.startDate.toDateString() })
         }
 
         if (currentFilters.endDate.getTime() != new Date('9999-12-31T23:59:59.999Z').getTime()) {
-            activeFiltersArray.push({ 'End Date': currentFilters.endDate.toDateString() })
+            activeFiltersArray.push({ 'To': currentFilters.endDate.toDateString() })
         }
 
         setActiveFilters(activeFiltersArray);
@@ -40,8 +42,8 @@ const ActiveFilterElements: React.FC<FilterProps> = ({ updateFilters, currentFil
             'Gender': () => updateFilters({ ...currentFilters, gender: '' }),
             'Min Age': () => updateFilters({ ...currentFilters, ageRange: [0, currentFilters.ageRange[1]] }),
             'Max Age': () => updateFilters({ ...currentFilters, ageRange: [currentFilters.ageRange[0], 120] }),
-            'Start Date': () => updateFilters({ ...currentFilters, startDate: new Date('0000-01-01T00:00:00.000Z') }),
-            'End Date': () => updateFilters({ ...currentFilters, endDate: new Date('9999-12-31T23:59:59.999Z') }),
+            'From': () => updateFilters({ ...currentFilters, startDate: new Date('0000-01-01T00:00:00.000Z') }),
+            'To': () => updateFilters({ ...currentFilters, endDate: new Date('9999-12-31T23:59:59.999Z') }),
         };
     
         if (filterMappings[key]) { 
@@ -50,16 +52,25 @@ const ActiveFilterElements: React.FC<FilterProps> = ({ updateFilters, currentFil
     };
 
     const elements = activeFilters.map((element, index) => (
-        <Button key={index} onClick={() => handleFilterRemoval(element)}>
-          {Object.entries(element).map(([key, value]) => (
+        <Chip
+            key={index}
+            icon={<IconX style={{ width: rem(16), height: rem(16) }} />}
+            color="blue"
+            variant="light"
+            checked={true}
+            onClick={() => handleFilterRemoval(element)}
+          >
+         {Object.entries(element).map(([key, value]) => (
             <p key={key}>{`${key}: ${value}`}</p>
           ))}
-        </Button>
+        </Chip>
     ));
 
     return (
         <>
-            {elements}
+            <Group gap='sm'>
+                {elements}
+            </Group>
         </>
     )
 }
