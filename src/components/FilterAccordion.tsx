@@ -1,12 +1,17 @@
-import { Accordion, Checkbox, Group, RangeSlider, RangeSliderValue, SegmentedControl, Space, Stack, Text, TextInput } from "@mantine/core";
+import { Accordion, Checkbox, Group, RangeSlider, RangeSliderValue, SegmentedControl, Space, Text, TextInput } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import React, { useEffect, useState } from "react";
 import { FilterOptions , FilterProps } from "../models/FilterOptions";
 
+interface CalendarProps {
+    updateCalendarOpened: (isOpen: boolean) => void;
+}
 
-const FilterAccordion: React.FC<FilterProps> = React.forwardRef(({ updateFilters, currentFilters }, _ ) => {
+const FilterAccordion: React.FC<FilterProps & CalendarProps> = React.forwardRef(({ updateFilters, currentFilters, updateCalendarOpened }, _ ) => {
 
     const [opened, setOpened] = useState<string[]>([]);
+
+    const [calendarOpened, setCalendarOpened] = useState<boolean>(false)
 
     const [femaleFilterChecked, setFemaleFilterChecked] = useState<boolean>(currentFilters.gender === 'Female');
     const [maleFilterChecked, setMaleFilterChecked] = useState<boolean>(currentFilters.gender === 'Male');
@@ -31,6 +36,10 @@ const FilterAccordion: React.FC<FilterProps> = React.forwardRef(({ updateFilters
     useEffect(() => {
         setFilters(currentFilters);
     }, [currentFilters]);
+
+    useEffect(() => {
+        updateCalendarOpened(calendarOpened)
+    }, [calendarOpened])
 
     const changeMinAgeFromText = (newAge: string) => {
         const intAge = parseInt(newAge, 10);
@@ -117,6 +126,7 @@ const FilterAccordion: React.FC<FilterProps> = React.forwardRef(({ updateFilters
           startDate: startDateToUse
         })
         setStartDate(newStartDate)
+        setCalendarOpened(false)
     }
 
     const handleEndDateChange = (newEndDate: Date | null) => {
@@ -127,16 +137,21 @@ const FilterAccordion: React.FC<FilterProps> = React.forwardRef(({ updateFilters
         })
 
         setEndDate(newEndDate)
+        setCalendarOpened(false)
     }
 
     const genderFilter = (
         <Group justify="space-between" gap="xl" grow>
-            <Checkbox onClick={() => handleFilterByGender('Female')} 
+            <Checkbox onClick={() => handleFilterByGender('Female')}
+                        color="orange"
+                        variant='outline'
                         label='Female' 
                         checked={femaleFilterChecked} 
                         onChange={(event) => handleCheckmarkChange(event.currentTarget.checked, 'Female')}/>
             <Checkbox onClick={() => handleFilterByGender('Male')} 
                         label='Male' 
+                        color="orange"
+                        variant='outline'
                         checked={maleFilterChecked} 
                         onChange={(event) => handleCheckmarkChange(event.currentTarget.checked, 'Male')}/>
         </Group>
@@ -244,6 +259,7 @@ const FilterAccordion: React.FC<FilterProps> = React.forwardRef(({ updateFilters
                         onChange={handleStartDateChange}
                         label="From"
                         placeholder="Start Date"
+                        onClick={() => setCalendarOpened(true)}
                     />
                     <Space h="md" />
                     <DateInput
@@ -252,6 +268,7 @@ const FilterAccordion: React.FC<FilterProps> = React.forwardRef(({ updateFilters
                         onChange={handleEndDateChange}
                         label="To"
                         placeholder="End Date"
+                        onClick={() => setCalendarOpened(true)}
                     />
                 </Accordion.Panel>
             </Accordion.Item>

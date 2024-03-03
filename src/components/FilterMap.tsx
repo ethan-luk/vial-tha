@@ -8,7 +8,9 @@ import FilterButton from "./FilterButton";
 const FilterMap: React.FC<FilterProps> = ({ updateFilters, currentFilters, activeFilters }) =>  {
 
     const [filters, setFilters] = useState(currentFilters);
-    const [numActiveFilters, setNumActiveFilters] = useState(activeFilters ? Object.keys(activeFilters).length : 0);
+    const [numActiveFilters, setNumActiveFilters] = useState<number>(activeFilters ? Object.keys(activeFilters).length : 0);
+
+    const [calendarOpened, setCalendarOpened] = useState<boolean>(false)
 
     useEffect(() => {
         updateFilters(filters)
@@ -21,9 +23,14 @@ const FilterMap: React.FC<FilterProps> = ({ updateFilters, currentFilters, activ
     useEffect(() => {
       setNumActiveFilters(activeFilters ? Object.keys(activeFilters).length : 0);
     }, [activeFilters]);
-    
+
+    const handleCalendarOpened = (isOpen: boolean) => {
+      console.log('Calendar opened?', isOpen)
+      setCalendarOpened(isOpen)
+    }
+
     return (
-        <Menu shadow="md" width={400} closeOnClickOutside={false} position='bottom-start'>
+        <Menu shadow="md" width={400} closeOnClickOutside={!calendarOpened} position='bottom-start'>
           <Menu.Target>
             <FilterButton numActiveFilters={numActiveFilters}/>
           </Menu.Target>
@@ -31,7 +38,7 @@ const FilterMap: React.FC<FilterProps> = ({ updateFilters, currentFilters, activ
           <Menu.Dropdown>
             <Menu.Label>Filter By:</Menu.Label>
             <Menu.Item closeMenuOnClick={true}><SlClose /></Menu.Item>
-            <Menu.Item component={FilterAccordion} updateFilters={setFilters} currentFilters={filters} />
+            <Menu.Item component={FilterAccordion} updateFilters={setFilters} currentFilters={filters} updateCalendarOpened={handleCalendarOpened}/>
           </Menu.Dropdown>
         </Menu>
     );

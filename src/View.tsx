@@ -84,10 +84,10 @@ const View = () => {
                     <FilterMap updateFilters={updateFilters} currentFilters={filters} activeFilters={activeFilters} />
                 </Grid.Col>
 
-                <Grid.Col span={10}>
+                <Grid.Col span={8}>
                     <ActiveFilterElements updateFilters={updateFilters} updateActiveFilters={updateActiveFilters} currentFilters={filters}/>
                 </Grid.Col>
-                <Grid.Col span={2}>
+                <Grid.Col span={4}>
                 <Flex
                     mih={30}
                     justify="flex-end"
