@@ -8,9 +8,8 @@ const FilterAccordion: React.FC<FilterProps> = React.forwardRef(({ updateFilters
 
     const [value, setValue] = useState<string[]>([]);
 
-    const [femaleFilterChecked, setFemaleFilterChecked] = useState(currentFilters.gender === 'Female');
-    const [maleFilterChecked, setMaleFilterChecked] = useState(currentFilters.gender === 'Male');
-    const [isActiveFilterChecked, setIsActiveFilterChecked] = useState(currentFilters.showActiveOnly);    
+    const [femaleFilterChecked, setFemaleFilterChecked] = useState<boolean>(currentFilters.gender === 'Female');
+    const [maleFilterChecked, setMaleFilterChecked] = useState<boolean>(currentFilters.gender === 'Male');
     
     const [ageRange, setAgeRange] = useState<[number, number]>(currentFilters.ageRange)
     const [startDate, setStartDate] = useState<Date | null>(currentFilters.startDate.getTime() == new Date('0000-01-01T00:00:00.000Z').getTime() ? null : currentFilters.startDate);
@@ -34,13 +33,6 @@ const FilterAccordion: React.FC<FilterProps> = React.forwardRef(({ updateFilters
             ...prevFilters,
             gender: newGenderFilter,
             };
-        });
-    };
-
-    const handleIsActiveFilter = () => {
-        setFilters({
-          ...filters,
-          showActiveOnly: !filters.showActiveOnly,
         });
     };
     
@@ -96,18 +88,6 @@ const FilterAccordion: React.FC<FilterProps> = React.forwardRef(({ updateFilters
                                 label='Male' 
                                 checked={maleFilterChecked} 
                                 onChange={(event) => handleCheckmarkChange(event.currentTarget.checked, 'Male')}/>
-                </Accordion.Panel>
-            </Accordion.Item>
-
-            <Accordion.Item value={'Status'}>
-                <Accordion.Control>
-                    Status
-                </Accordion.Control>
-                <Accordion.Panel>
-                    <Checkbox onClick={() => handleIsActiveFilter()} 
-                                label='Show Active Only' 
-                                checked={isActiveFilterChecked} 
-                                onChange={(event) => setIsActiveFilterChecked(event.currentTarget.checked)}/>
                 </Accordion.Panel>
             </Accordion.Item>
 

@@ -4,10 +4,16 @@ import { Chip, Group, rem } from "@mantine/core";
 import { IconX } from '@tabler/icons-react';
 
 
-const ActiveFilterElements: React.FC<FilterProps> = ({ updateFilters, currentFilters }) =>  {
+const ActiveFilterElements: React.FC<FilterProps> = ({ updateFilters, updateActiveFilters, currentFilters }) =>  {
 
     const [activeFilters, setActiveFilters] = useState<{ [key: string]: string }[]>([]);
 
+    useEffect(() => {
+        if (updateActiveFilters) {
+            updateActiveFilters(activeFilters);
+        }
+    }, [activeFilters])
+    
     useEffect(() => {
         const activeFiltersArray = [];
 
@@ -36,8 +42,7 @@ const ActiveFilterElements: React.FC<FilterProps> = ({ updateFilters, currentFil
 
     const handleFilterRemoval = (element: { [key: string]: string }) => {
         const key = Object.keys(element)[0];
-        console.log(key);
-    
+            
         const filterMappings: { [key: string]: () => void } = {
             'Gender': () => updateFilters({ ...currentFilters, gender: '' }),
             'Min Age': () => updateFilters({ ...currentFilters, ageRange: [0, currentFilters.ageRange[1]] }),

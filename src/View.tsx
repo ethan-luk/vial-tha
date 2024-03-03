@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import SubjectTable from "./components/SubjectTable"
 import Subject from './models/SubjectInfo';
 import FilterMap from "./components/FilterMap";
-import { Grid, Title } from "@mantine/core";
+import { Checkbox, Grid, Title } from "@mantine/core";
 import SubjectInfo from "./models/SubjectInfo";
 import { FilterOptions } from "./models/FilterOptions";
 import ActiveFilterElements from "./components/ActiveFilterElements";
 
+import "./styles.css"
 
 const View = () => {
 
@@ -18,6 +19,11 @@ const View = () => {
       startDate: new Date('0000-01-01T00:00:00.000Z'),
       endDate: new Date('9999-12-31T23:59:59.999Z')
     });
+
+    const [isActiveFilterChecked, setIsActiveFilterChecked] = useState<boolean>(false);    
+
+
+    const [activeFilters, setActiveFilters] = useState<{[key: string]: string}[]>([])
 
     // Fetch Data from Endpoint
     useEffect(() => {
@@ -45,6 +51,17 @@ const View = () => {
     const updateFilters = (newFilters: FilterOptions) => {
         setFilters(newFilters)
     } 
+
+    const updateActiveFilters = (newActiveFilters: {[key: string]: string}[]) => {
+        setActiveFilters(newActiveFilters)
+    }
+
+    const handleIsActiveFilter = () => {
+        setFilters({
+          ...filters,
+          showActiveOnly: !filters.showActiveOnly,
+        });
+    };
     
     const filteredData = subjects.filter(item => {
         return (
@@ -58,16 +75,25 @@ const View = () => {
 
     return (
         <>
-            <Grid style={{ paddingLeft: '80px', paddingTop: '60px', paddingRight: '80px' }} align-items='center'>
+            <Grid style={{ paddingLeft: '80px', paddingTop: '60px', paddingRight: '80px', paddingBottom: '80px' }} align-items='center'>
                 <Grid.Col span={12}>
                     <Title>Subjects</Title>
                 </Grid.Col>
+                <Grid.Col span={12} />
+                <Grid.Col span={12} />
+                <Grid.Col span={10}>
+                    <FilterMap updateFilters={updateFilters} currentFilters={filters} activeFilters={activeFilters} />
+                </Grid.Col>
                 <Grid.Col span={2}>
-                    <FilterMap updateFilters={updateFilters} currentFilters={filters}/>
+                    <Checkbox onClick={() => handleIsActiveFilter()} 
+                                label="Show Active Only" 
+                                checked={isActiveFilterChecked} 
+                                onChange={(event) => setIsActiveFilterChecked(event.currentTarget.checked)}/>
                 </Grid.Col>
-                <Grid.Col span={12}>
-                    <ActiveFilterElements updateFilters={updateFilters} currentFilters={filters}/>
+                <Grid.Col span={10}>
+                    <ActiveFilterElements updateFilters={updateFilters} updateActiveFilters={updateActiveFilters} currentFilters={filters}/>
                 </Grid.Col>
+                <Grid.Col span={12} />
                 <Grid.Col span={12}>
                     <SubjectTable subjects={filteredData} updateSort={handleSort}/>
                 </Grid.Col>

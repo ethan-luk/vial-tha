@@ -1,0 +1,25 @@
+.circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px; /* Adjust the width and height as needed */
+    height: 20px;
+    border-radius: 50%;
+    background-color: #000000; /* Choose your desired background color */
+    color: #fff; /* Choose your desired text color */
+    font-size: 12px; /* Choose your desired font size */
+    font-weight: bold;
+}
+
+.hidden {
+    opacity: 0;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.checkbox-container {
+    margin-left: auto;
+}

@@ -5,9 +5,10 @@ import { SlClose } from "react-icons/sl";
 import { FilterProps } from "../models/FilterOptions";
 import FilterButton from "./FilterButton";
 
-const FilterMap: React.FC<FilterProps> = ({ updateFilters, currentFilters }) =>  {
+const FilterMap: React.FC<FilterProps> = ({ updateFilters, currentFilters, activeFilters }) =>  {
 
     const [filters, setFilters] = useState(currentFilters);
+    const [numActiveFilters, setNumActiveFilters] = useState(activeFilters ? Object.keys(activeFilters).length : 0);
 
     useEffect(() => {
         updateFilters(filters)
@@ -17,10 +18,14 @@ const FilterMap: React.FC<FilterProps> = ({ updateFilters, currentFilters }) => 
         setFilters(currentFilters);
     }, [currentFilters]);
 
+    useEffect(() => {
+      setNumActiveFilters(activeFilters ? Object.keys(activeFilters).length : 0);
+    }, [activeFilters]);
+    
     return (
         <Menu shadow="md" width={400} closeOnClickOutside={false} position='bottom-start'>
           <Menu.Target>
-            <FilterButton />
+            <FilterButton numActiveFilters={numActiveFilters}/>
           </Menu.Target>
       
           <Menu.Dropdown>

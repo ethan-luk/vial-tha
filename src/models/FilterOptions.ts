@@ -8,7 +8,9 @@ interface FilterOptions {
 
 interface FilterProps {
     updateFilters: (filters: FilterOptions) => void;
+    updateActiveFilters?: ((activeFilters: { [key: string]: string }[]) => void) | undefined;
     currentFilters: FilterOptions
+    activeFilters?: { [key: string]: string }[] | undefined;
 }
 
 export type { FilterOptions, FilterProps }
