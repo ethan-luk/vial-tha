@@ -6,7 +6,7 @@ import '../styles.css';
 
 
 const FilterButton  = forwardRef<HTMLButtonElement, { numActiveFilters: number }>(({ numActiveFilters, ...others }, ref) => {
-    return (
+    const button = (
         <Button ref={ref}
                 w={numActiveFilters != 0 ? '144px' : '109px'}
                 h={40}
@@ -20,6 +20,7 @@ const FilterButton  = forwardRef<HTMLButtonElement, { numActiveFilters: number }
             Filters
         </Button>
     )
+    return button
 });
 
 

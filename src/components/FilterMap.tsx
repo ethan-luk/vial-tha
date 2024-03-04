@@ -4,45 +4,59 @@ import FilterAccordion from "./FilterAccordion";
 import FilterButton from "./FilterButton";
 import { Menu, Text } from "@mantine/core";
 
+const FilterMap: React.FC<FilterProps> = ({
+  updateFilters,
+  currentFilters,
+  activeFilters,
+}) => {
+  const [filters, setFilters] = useState(currentFilters);
+  const [numActiveFilters, setNumActiveFilters] = useState<number>(
+    activeFilters ? Object.keys(activeFilters).length : 0
+  );
 
-const FilterMap: React.FC<FilterProps> = ({ updateFilters, currentFilters, activeFilters }) =>  {
+  const [calendarOpened, setCalendarOpened] = useState<boolean>(false);
 
-    const [filters, setFilters] = useState(currentFilters);
-    const [numActiveFilters, setNumActiveFilters] = useState<number>(activeFilters ? Object.keys(activeFilters).length : 0);
+  useEffect(() => {
+    updateFilters(filters);
+  }, [filters]);
 
-    const [calendarOpened, setCalendarOpened] = useState<boolean>(false)
+  useEffect(() => {
+    setFilters(currentFilters);
+  }, [currentFilters]);
 
-    useEffect(() => {
-        updateFilters(filters)
-    }, [filters])
+  useEffect(() => {
+    setNumActiveFilters(activeFilters ? Object.keys(activeFilters).length : 0);
+  }, [activeFilters]);
 
-    useEffect(() => {
-        setFilters(currentFilters);
-    }, [currentFilters]);
+  const handleCalendarOpened = (isOpen: boolean) => {
+    setCalendarOpened(isOpen);
+  };
 
-    useEffect(() => {
-      setNumActiveFilters(activeFilters ? Object.keys(activeFilters).length : 0);
-    }, [activeFilters]);
+  return (
+    <Menu
+      shadow="md"
+      width={375}
+      closeOnClickOutside={!calendarOpened}
+      position="right-start"
+    >
+      <Menu.Target>
+        <FilterButton numActiveFilters={numActiveFilters} />
+      </Menu.Target>
 
-    const handleCalendarOpened = (isOpen: boolean) => {
-      setCalendarOpened(isOpen)
-    }
+      <Menu.Dropdown>
+        <Menu.Label>Filter By:</Menu.Label>
+        <Menu.Item
+          component={FilterAccordion}
+          updateFilters={setFilters}
+          currentFilters={filters}
+          updateCalendarOpened={handleCalendarOpened}
+        />
+        <Menu.Item closeMenuOnClick h={45} ps="md">
+          <Text c="orange">Close</Text>
+        </Menu.Item>
+      </Menu.Dropdown>
+    </Menu>
+  );
+};
 
-    return (
-        <Menu shadow="md" width={375} closeOnClickOutside={!calendarOpened} position='right-start'>
-          <Menu.Target>
-            <FilterButton numActiveFilters={numActiveFilters}/>
-          </Menu.Target>
-      
-          <Menu.Dropdown>
-            <Menu.Label>Filter By:</Menu.Label>
-            <Menu.Item component={FilterAccordion} updateFilters={setFilters} currentFilters={filters} updateCalendarOpened={handleCalendarOpened}/>
-            <Menu.Item closeMenuOnClick h={45} ps='md'>
-              <Text c='orange'>Close</Text>
-            </Menu.Item>
-          </Menu.Dropdown>
-        </Menu>
-    );
-}
-
-export default FilterMap
+export default FilterMap;
