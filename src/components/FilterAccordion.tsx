@@ -299,7 +299,7 @@ const FilterAccordion: React.FC<FilterProps & CalendarProps> = React.forwardRef(
       <Accordion multiple value={opened} onChange={setOpened}>
         <Accordion.Item value={"Gender"}>
           <Accordion.Control h={45}>
-            <Text>Gender</Text>
+            <Text size="sm" fw={700}>Gender</Text>
           </Accordion.Control>
           <Accordion.Panel>
             <Space h="xs" />
@@ -310,7 +310,7 @@ const FilterAccordion: React.FC<FilterProps & CalendarProps> = React.forwardRef(
 
         <Accordion.Item value={"Age"}>
           <Accordion.Control h={45}>
-            <Text>Age</Text>
+            <Text size="sm" fw={700}>Age</Text>
           </Accordion.Control>
           <Accordion.Panel>
             <Space h="xs" />
@@ -323,7 +323,7 @@ const FilterAccordion: React.FC<FilterProps & CalendarProps> = React.forwardRef(
 
         <Accordion.Item value={"StartDate"}>
           <Accordion.Control h={45}>
-            <Text>Date</Text>
+            <Text size="sm" fw={700}>Date</Text>
           </Accordion.Control>
           <Accordion.Panel>{startAndEndDateFilter}</Accordion.Panel>
         </Accordion.Item>

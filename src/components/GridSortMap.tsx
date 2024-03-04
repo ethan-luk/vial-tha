@@ -10,12 +10,14 @@ interface GridSortButtonProps {
     sortedSubjects: SubjectInfo[],
     activeSort: { [key: string]: string }
   ) => void;
+  originalSubjects: SubjectInfo[]
   activeSort: boolean;
   subjects: SubjectInfo[];
 }
 
 const GridSortMap: React.FC<GridSortButtonProps> = ({
   updateSort,
+  originalSubjects,
   activeSort,
   subjects,
 }) => {
@@ -77,6 +79,11 @@ const GridSortMap: React.FC<GridSortButtonProps> = ({
   const handleSortType = (ascending: boolean | null) => {
     setSortAsc(ascending);
   };
+  
+  const handleResetClick = () => {
+    updateSort(originalSubjects, {})
+
+  }
 
   return (
     <Menu shadow="md" width={375} position="right-start">
@@ -100,9 +107,14 @@ const GridSortMap: React.FC<GridSortButtonProps> = ({
           currentType={sortAsc}
         />
         <Space h="xs" />
+        <Menu.Item
+          onClick={handleResetClick}
+        >
+          <Text size="sm" ta="center" fw={700}>Reset</Text>
+        </Menu.Item>
         <Menu.Divider />
-        <Menu.Item closeMenuOnClick h={45} ps="md">
-          <Text c="orange">Close</Text>
+        <Menu.Item closeMenuOnClick h={40} ps="md">
+          <Text size="sm" ta="center" fw={700} c="orange">Close</Text>
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>

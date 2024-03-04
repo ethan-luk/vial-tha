@@ -174,6 +174,7 @@ const View = () => {
       />
       <GridSortMap
         updateSort={handleSort}
+        originalSubjects={initialSubjects}
         activeSort={Object.keys(activeSort).length > 0}
         subjects={subjects}
       />

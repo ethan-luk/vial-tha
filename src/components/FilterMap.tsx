@@ -52,7 +52,7 @@ const FilterMap: React.FC<FilterProps> = ({
           updateCalendarOpened={handleCalendarOpened}
         />
         <Menu.Item closeMenuOnClick h={45} ps="md">
-          <Text c="orange">Close</Text>
+          <Text size="sm" fw={700} ta="center" c="orange">Close</Text>
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>
