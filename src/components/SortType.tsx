@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Group } from "@mantine/core";
+import { RiSortAsc , RiSortDesc} from "react-icons/ri";
 
 interface SortTypeProps {
   updateSortType: (sortAsc: boolean | null) => void;
@@ -9,25 +10,39 @@ interface SortTypeProps {
 
 const SortType: React.FC<SortTypeProps> = React.forwardRef(
   ({ updateSortType, disable, currentType }, _) => {
+
+    const [type, setType] = useState<boolean | null>(currentType)
+
+    const handleSortPress = (ascending: boolean) => {
+        setType(ascending)
+        updateSortType(ascending)
+    }
+
     return (
       <Group gap={2} pe="md" ps="md" justify="center" grow>
         <Button
-          variant={currentType ? "filled" : "outline"}
+          variant={type ? "filled" : "outline"}
           color="orange"
           disabled={disable}
           h={35}
-          onClick={() => updateSortType(true)}
+          onClick={() => handleSortPress(true)}
         >
-          Ascending
+            <Group justify="center">
+                <RiSortAsc size={16}/>
+                Ascending
+            </Group>
         </Button>
         <Button
-          variant={currentType == false ? "filled" : "outline"}
+          variant={type == false ? "filled" : "outline"}
           color="orange"
           disabled={disable}
           h={35}
-          onClick={() => updateSortType(false)}
+          onClick={() => handleSortPress(false)}
         >
-          Descending
+          <Group justify="center">
+                <RiSortDesc size={16}/>
+                Descending
+            </Group>
         </Button>
       </Group>
     );
