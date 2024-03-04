@@ -108,9 +108,8 @@ const View = () => {
 
   const filteredData = subjects.filter((item) => {
     const originalDiagnosisDate = new Date(item.diagnosisDate)
-
     originalDiagnosisDate.setDate(originalDiagnosisDate.getDate() - 1);
-    console.log(filters.endDate, originalDiagnosisDate)
+
     return (
       (filters.gender === "" || item.gender === filters.gender) &&
       (!filters.showActiveOnly || item.status === "Active") &&
