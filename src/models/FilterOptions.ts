@@ -4,6 +4,7 @@ interface FilterOptions {
     ageRange: [number, number], 
     startDate: Date, 
     endDate: Date
+    searchText: string
 }
 
 interface FilterProps {

@@ -188,7 +188,8 @@ const FilterAccordion: React.FC<FilterProps & CalendarProps> = React.forwardRef(
 
     const sliderAgeControl = (
         <>
-            <Text>Range:</Text>
+            <Text size='sm' fw={500}>Range:</Text>
+            <Space h='xs' />
             <RangeSlider minRange={1}
                 min={0}
                 max={120}
@@ -224,8 +225,8 @@ const FilterAccordion: React.FC<FilterProps & CalendarProps> = React.forwardRef(
     return (
         <Accordion multiple value={opened} onChange={setOpened}>
             <Accordion.Item value={'Gender'}>
-                <Accordion.Control>
-                    Gender
+                <Accordion.Control h={45}>
+                    <Text>Gender</Text>
                 </Accordion.Control>
                 <Accordion.Panel>
                     <Space h="xs" />
@@ -235,8 +236,8 @@ const FilterAccordion: React.FC<FilterProps & CalendarProps> = React.forwardRef(
             </Accordion.Item>
 
             <Accordion.Item value={'Age'}>
-                <Accordion.Control>
-                    Age
+                <Accordion.Control h={45}>
+                    <Text>Age</Text>
                 </Accordion.Control>
                 <Accordion.Panel>    
                     <Space h='xs' />
@@ -244,13 +245,12 @@ const FilterAccordion: React.FC<FilterProps & CalendarProps> = React.forwardRef(
                     <Space h='md' />
                         {ageControl == 'text' ? textAgeControl : sliderAgeControl}
                     <Space h='md' />
-
                 </Accordion.Panel>
             </Accordion.Item>
 
             <Accordion.Item value={'StartDate'}>
-                <Accordion.Control>
-                    Date
+                <Accordion.Control h={45}>
+                <Text>Date</Text>
                 </Accordion.Control>
                 <Accordion.Panel>
                     <DateInput

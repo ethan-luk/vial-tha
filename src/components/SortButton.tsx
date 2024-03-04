@@ -39,6 +39,7 @@ const SortButton: React.FC<SortButtonProps> = ({ updateSort, subjects, sortBy })
             });
         }
 
+        // Sort by age
         else if (sortBy === 'Age') {
             sortedData.sort((a, b) => {
                 if (sortAsc) {
@@ -56,10 +57,16 @@ const SortButton: React.FC<SortButtonProps> = ({ updateSort, subjects, sortBy })
     return (
         <>
             {
-                sortAsc ? <SlArrowDown onClick={handleSort} 
-                                        style={{ paddingTop: '5px', float: 'right' }}/> : 
+                sortAsc ? <SlArrowDown onClick={handleSort}
+                                        style={{ paddingTop: '5px',
+                                                float: 'right', 
+                                                cursor: 'pointer',  // Add this line to change the cursor on hover
+                                                transition: 'color 0.3s'}}/> : 
                           <SlArrowUp onClick={handleSort} 
-                                        style={{ paddingTop: '5px', float: 'right' }} />
+                                        style={{ paddingTop: '5px', 
+                                                float: 'right',
+                                                cursor: 'pointer',
+                                                transition: 'color 0.3s' }} />
             }
         </>
     );    

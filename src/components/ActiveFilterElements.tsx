@@ -30,11 +30,15 @@ const ActiveFilterElements: React.FC<FilterProps> = ({ updateFilters, updateActi
         }
 
         if (currentFilters.startDate.getTime() != new Date('0000-01-01T00:00:00.000Z').getTime()) {
-            activeFiltersArray.push({ 'From': currentFilters.startDate.toDateString() })
+            activeFiltersArray.push({ 'From': currentFilters.startDate.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })})
         }
 
         if (currentFilters.endDate.getTime() != new Date('9999-12-31T23:59:59.999Z').getTime()) {
-            activeFiltersArray.push({ 'To': currentFilters.endDate.toDateString() })
+            activeFiltersArray.push({ 'To': currentFilters.endDate.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })})
+        }
+
+        if (currentFilters.searchText != '') {
+            activeFiltersArray.push({ 'Search By Name': currentFilters.searchText})
         }
 
         setActiveFilters(activeFiltersArray);

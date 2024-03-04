@@ -1,7 +1,6 @@
-import { Menu } from "@mantine/core";
+import { Menu, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 import FilterAccordion from "./FilterAccordion";
-import { SlClose } from "react-icons/sl";
 import { FilterProps } from "../models/FilterOptions";
 import FilterButton from "./FilterButton";
 
@@ -25,20 +24,21 @@ const FilterMap: React.FC<FilterProps> = ({ updateFilters, currentFilters, activ
     }, [activeFilters]);
 
     const handleCalendarOpened = (isOpen: boolean) => {
-      console.log('Calendar opened?', isOpen)
       setCalendarOpened(isOpen)
     }
 
     return (
-        <Menu shadow="md" width={400} closeOnClickOutside={!calendarOpened} position='bottom-start'>
+        <Menu shadow="md" width={375} closeOnClickOutside={!calendarOpened} position='right-start'>
           <Menu.Target>
             <FilterButton numActiveFilters={numActiveFilters}/>
           </Menu.Target>
       
           <Menu.Dropdown>
             <Menu.Label>Filter By:</Menu.Label>
-            <Menu.Item closeMenuOnClick={true}><SlClose /></Menu.Item>
             <Menu.Item component={FilterAccordion} updateFilters={setFilters} currentFilters={filters} updateCalendarOpened={handleCalendarOpened}/>
+            <Menu.Item closeMenuOnClick h={45} ps='md'>
+              <Text c='orange'>Close</Text>
+            </Menu.Item>
           </Menu.Dropdown>
         </Menu>
     );

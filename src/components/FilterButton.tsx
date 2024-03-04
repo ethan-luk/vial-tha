@@ -7,11 +7,13 @@ import '../styles.css'; // Import your CSS file
 
 const FilterButton  = forwardRef<HTMLButtonElement, { numActiveFilters: number }>(({ numActiveFilters, ...others }, ref) => {
     return (
-        <Button ref={ref} 
-                style={{ width: numActiveFilters != 0 ? '144px' : '109px', height:'40px' }} 
+        <Button ref={ref}
+                w={numActiveFilters != 0 ? '144px' : '109px'}
+                h={40}
                 justify='space-between'
                 variant={numActiveFilters != 0 ? 'filled' : 'outline' }
                 color='orange'
+                radius='md'
                 leftSection={<LuFilter size={14} />} 
                 rightSection={numActiveFilters != 0 && <div className={`circle`}>{numActiveFilters}</div>}
                 {...others}>
