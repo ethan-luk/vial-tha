@@ -38,13 +38,19 @@ const SubjectGrid: React.FC<GridProps> = ({ subjects }) => {
           </Flex>
           <Space h="lg" />
           <Text size="lg" ta="center" fw={700}>
-            {subject.name}
+            {subject.name}, {subject.gender == "Female" ? "F" : "M"}
           </Text>
           <Text size="xl" ta="center">
             {subject.age.toString()}
           </Text>
           <Text size="xs" ta="center">
-            {subject.status}
+            Diagnosis Date: <br />
+            {new Date(subject.diagnosisDate).toLocaleDateString("en-US", {
+              month: "long",
+              day: "numeric",
+              year: "numeric",
+            })}
+            , {subject.status}
           </Text>
         </Stack>
       </Container>
