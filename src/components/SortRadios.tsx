@@ -19,10 +19,10 @@ const SortRadios: React.FC<SortRadioProps> = React.forwardRef(
 
     return (
       <Radio.Group value={sortOption} onChange={setSortOption} ps="md" pt="sm">
-        <Radio color="orange" pt="sm" value="Name" label="Name" />
-        <Radio color="orange" pt="sm" value="Age" label="Age" />
+        <Radio color="green" pt="sm" value="Name" label="Name" />
+        <Radio color="green" pt="sm" value="Age" label="Age" />
         <Radio
-          color="orange"
+          color="green"
           pt="sm"
           value="Diagnosis Date"
           label="Diagnosis Date"

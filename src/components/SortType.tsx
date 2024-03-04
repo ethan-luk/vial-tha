@@ -22,19 +22,19 @@ const SortType: React.FC<SortTypeProps> = React.forwardRef(
       <Group gap={2} pe="md" ps="md" justify="center" grow>
         <Button
           variant={type ? "filled" : "outline"}
-          color="orange"
+          color="green"
           disabled={disable}
           h={35}
           onClick={() => handleSortPress(true)}
         >
-            <Group justify="center">
+            <Group justify="light">
                 <RiSortAsc size={16}/>
                 Ascending
             </Group>
         </Button>
         <Button
           variant={type == false ? "filled" : "outline"}
-          color="orange"
+          color="green"
           disabled={disable}
           h={35}
           onClick={() => handleSortPress(false)}

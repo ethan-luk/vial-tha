@@ -11,7 +11,7 @@ const SubjectGrid: React.FC<GridProps> = ({ subjects }) => {
     return {
       bg:
         gender === "Female"
-          ? "var(--mantine-color-pink-light)"
+          ? "var(--mantine-color-grape-light)"
           : "var(--mantine-color-blue-light)",
       h: 275,
       style: {

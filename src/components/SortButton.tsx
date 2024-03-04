@@ -11,8 +11,8 @@ const sortButton = forwardRef<HTMLButtonElement, { activeSort: boolean }>(
         w={activeSort ? "120px" : "100px"}
         h={40}
         justify="flex-start"
-        variant={activeSort ? "filled" : "outline"}
-        color="orange"
+        variant={activeSort ? "light" : "outline"}
+        color="green"
         radius="md"
         leftSection={<GoSortAsc size={18} />}
         rightSection={activeSort && <div className={`circle`}>1</div>}

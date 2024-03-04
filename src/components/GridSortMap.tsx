@@ -114,7 +114,7 @@ const GridSortMap: React.FC<GridSortButtonProps> = ({
         </Menu.Item>
         <Menu.Divider />
         <Menu.Item closeMenuOnClick h={40} ps="md">
-          <Text size="sm" ta="center" fw={700} c="orange">Close</Text>
+          <Text size="sm" ta="center" fw={700} c="green">Close</Text>
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>

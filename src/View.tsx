@@ -134,7 +134,7 @@ const View = () => {
         radius="md"
         value={viewControl}
         onChange={setViewControl}
-        color="orange"
+        color="grape"
         data={[
           {
             label: (
@@ -193,7 +193,7 @@ const View = () => {
         onClick={() => handleIsActiveFilter()}
         label="Show Active Only"
         variant="outline"
-        color="orange"
+        color="cyan"
         checked={isActiveFilterChecked}
         onChange={(event) =>
           setIsActiveFilterChecked(event.currentTarget.checked)
@@ -210,7 +210,7 @@ const View = () => {
       {isActiveFilterChecked && (
         <Chip
           icon={<IconX style={{ width: rem(16), height: rem(16) }} />}
-          color="purple"
+          color="cyan"
           variant="light"
           checked={true}
           onClick={() => setIsActiveFilterChecked(false)}

@@ -35,7 +35,7 @@ const SubjectTable: React.FC<TableProps> = ({ updateSort, subjects }) => {
 
   const headers = (
     <Table.Tr>
-      <Table.Th c="orange">
+      <Table.Th c="grape">
         Name{" "}
         <TableSortButton
           updateSort={handleUpdateSort}
@@ -43,7 +43,7 @@ const SubjectTable: React.FC<TableProps> = ({ updateSort, subjects }) => {
           sortBy="Name"
         />
       </Table.Th>
-      <Table.Th c="orange">
+      <Table.Th c="grape">
         Age{" "}
         <TableSortButton
           updateSort={handleUpdateSort}
@@ -51,8 +51,8 @@ const SubjectTable: React.FC<TableProps> = ({ updateSort, subjects }) => {
           sortBy="Age"
         />
       </Table.Th>
-      <Table.Th c="orange">Gender</Table.Th>
-      <Table.Th c="orange">
+      <Table.Th c="grape">Gender</Table.Th>
+      <Table.Th c="grape">
         Diagnosis Date{" "}
         <TableSortButton
           updateSort={handleUpdateSort}
@@ -60,7 +60,7 @@ const SubjectTable: React.FC<TableProps> = ({ updateSort, subjects }) => {
           sortBy="Diagnosis Date"
         />
       </Table.Th>
-      <Table.Th c="orange">Status</Table.Th>
+      <Table.Th c="grape">Status</Table.Th>
     </Table.Tr>
   );
 
@@ -89,7 +89,7 @@ const SubjectTable: React.FC<TableProps> = ({ updateSort, subjects }) => {
       <Space h="sm" />
       <Flex justify="center">
         <Pagination
-          color="orange"
+          color="grape"
           total={numPages}
           value={activePage}
           onChange={setPage}

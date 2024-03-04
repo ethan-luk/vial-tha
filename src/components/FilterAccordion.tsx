@@ -180,7 +180,7 @@ const FilterAccordion: React.FC<FilterProps & CalendarProps> = React.forwardRef(
       <Group justify="space-between" gap="xl" grow>
         <Checkbox
           onClick={() => handleFilterByGender("Female")}
-          color="orange"
+          color="blue"
           variant="outline"
           label="Female"
           checked={femaleFilterChecked}
@@ -191,7 +191,7 @@ const FilterAccordion: React.FC<FilterProps & CalendarProps> = React.forwardRef(
         <Checkbox
           onClick={() => handleFilterByGender("Male")}
           label="Male"
-          color="orange"
+          color="blue"
           variant="outline"
           checked={maleFilterChecked}
           onChange={(event) =>
@@ -261,7 +261,7 @@ const FilterAccordion: React.FC<FilterProps & CalendarProps> = React.forwardRef(
       <SegmentedControl
         fullWidth
         radius="xl"
-        color="orange"
+        color="blue"
         value={ageControl}
         onChange={setAgeControl}
         data={[

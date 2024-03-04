@@ -14,8 +14,8 @@ const FilterButton = forwardRef<
       w={numActiveFilters != 0 ? "144px" : "109px"}
       h={40}
       justify="space-between"
-      variant={numActiveFilters != 0 ? "filled" : "outline"}
-      color="orange"
+      variant={numActiveFilters != 0 ? "light" : "outline"}
+      color="blue"
       radius="md"
       leftSection={<LuFilter size={14} />}
       rightSection={
