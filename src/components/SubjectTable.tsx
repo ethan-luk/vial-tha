@@ -1,26 +1,26 @@
 import { Table } from '@mantine/core';
 import '@mantine/dates/styles.css';
 import SubjectInfo from '../models/SubjectInfo';
-import SortButton from './SortButton';
+import TableSortButton from './TableSortButton';
 
 
 interface TableProps {
-    subjects: SubjectInfo[]
-    updateSort: (sortedSubjects: SubjectInfo[]) => void;
+  updateSort: (sortedSubjects: SubjectInfo[], activeSort: { [key: string]: string }) => void;
+  subjects: SubjectInfo[]
 }
 
 const SubjectTable: React.FC<TableProps> = ({ subjects, updateSort }) => {
 
-  const handleUpdateSort = (newData: SubjectInfo[]) => {
-    updateSort(newData)
+  const handleUpdateSort = (newData: SubjectInfo[], activeSort: { [key: string]: string }) => {
+    updateSort(newData, activeSort)
   }
 
   const headers = (
     <Table.Tr>
-      <Table.Th c='orange'>Name <SortButton updateSort={handleUpdateSort} subjects={subjects} sortBy='Name'/></Table.Th>
-      <Table.Th c='orange'>Age <SortButton updateSort={handleUpdateSort} subjects={subjects} sortBy='Age'/></Table.Th>
+      <Table.Th c='orange'>Name <TableSortButton updateSort={handleUpdateSort} subjects={subjects} sortBy='Name'/></Table.Th>
+      <Table.Th c='orange'>Age <TableSortButton updateSort={handleUpdateSort} subjects={subjects} sortBy='Age'/></Table.Th>
       <Table.Th c='orange'>Gender</Table.Th>
-      <Table.Th c='orange'>Diagnosis Date <SortButton updateSort={handleUpdateSort} subjects={subjects} sortBy='Diagnosis Date'/></Table.Th>
+      <Table.Th c='orange'>Diagnosis Date <TableSortButton updateSort={handleUpdateSort} subjects={subjects} sortBy='Diagnosis Date'/></Table.Th>
       <Table.Th c='orange'>Status</Table.Th>
     </Table.Tr>
   );

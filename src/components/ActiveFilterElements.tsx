@@ -38,7 +38,7 @@ const ActiveFilterElements: React.FC<FilterProps> = ({ updateFilters, updateActi
         }
 
         if (currentFilters.searchText != '') {
-            activeFiltersArray.push({ 'Search By Name': currentFilters.searchText})
+            activeFiltersArray.push({ 'Name Starts With': currentFilters.searchText})
         }
 
         setActiveFilters(activeFiltersArray);
