@@ -1,9 +1,10 @@
-import { Menu, Space, Text } from "@mantine/core"
-import SortButton from "./SortButton"
-import SortRadios from "./SortRadios"
-import SortType from "./SortType"
-import { useEffect, useState } from "react"
-import SubjectInfo from "../models/SubjectInfo"
+import { useEffect, useState } from "react";
+import SortButton from "./SortButton";
+import SortRadios from "./SortRadios";
+import SortType from "./SortType";
+import SubjectInfo from "../models/SubjectInfo";
+import { Menu, Space, Text } from "@mantine/core";
+
 
 interface GridSortButtonProps {
     updateSort: (sortedSubjects: SubjectInfo[], activeSort: { [key: string]: string }) => void;

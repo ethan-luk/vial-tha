@@ -1,8 +1,8 @@
-import { Table, Pagination, Flex, Space } from '@mantine/core';
-import '@mantine/dates/styles.css';
+import { useEffect, useState } from 'react';
 import SubjectInfo from '../models/SubjectInfo';
 import TableSortButton from './TableSortButton';
-import { useEffect, useState } from 'react';
+import { Table, Pagination, Flex, Space } from '@mantine/core';
+import '@mantine/dates/styles.css';
 
 
 interface TableProps {

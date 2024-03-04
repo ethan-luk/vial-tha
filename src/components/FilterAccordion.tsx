@@ -1,7 +1,7 @@
-import { Accordion, Checkbox, Group, RangeSlider, RangeSliderValue, SegmentedControl, Space, Text, TextInput } from "@mantine/core";
-import { DateInput } from "@mantine/dates";
 import React, { useEffect, useState } from "react";
 import { FilterOptions , FilterProps } from "../models/FilterOptions";
+import { Accordion, Checkbox, Group, RangeSlider, RangeSliderValue, SegmentedControl, Space, Text, TextInput } from "@mantine/core";
+import { DateInput } from "@mantine/dates";
 
 interface CalendarProps {
     updateCalendarOpened: (isOpen: boolean) => void;

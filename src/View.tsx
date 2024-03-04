@@ -1,22 +1,21 @@
 import { useState, useEffect } from "react";
-import SubjectTable from "./components/SubjectTable"
-import Subject from './models/SubjectInfo';
-import FilterMap from "./components/FilterMap";
-import { Center, Checkbox, Chip, Flex, Grid, Group, SegmentedControl, Stack, TextInput, Title, rem, Text } from "@mantine/core";
 import SubjectInfo from "./models/SubjectInfo";
 import { FilterOptions } from "./models/FilterOptions";
+import SubjectTable from "./components/SubjectTable"
+import SubjectGrid from "./components/SubjectGrid";
+import FilterMap from "./components/FilterMap";
 import ActiveFilterElements from "./components/ActiveFilterElements";
+import GridSortMap from "./components/GridSortMap";
+import { Center, Checkbox, Chip, Flex, Grid, Group, SegmentedControl, Stack, TextInput, Title, rem, Text } from "@mantine/core";
 import { IoGridOutline } from "react-icons/io5";
 import { CiViewTable } from "react-icons/ci";
-import SubjectGrid from "./components/SubjectGrid";
-import { IconX } from "@tabler/icons-react";
-import GridSortMap from "./components/GridSortMap";
 import { GiSadCrab } from "react-icons/gi";
+import { IconX } from "@tabler/icons-react";
 
 const View = () => {
 
-    const [subjects, setSubjects] = useState<Subject[]>([])
-    const [initialSubjects, setInitialSubjects] = useState<Subject[]>([])
+    const [subjects, setSubjects] = useState<SubjectInfo[]>([])
+    const [initialSubjects, setInitialSubjects] = useState<SubjectInfo[]>([])
     const [filters, setFilters] = useState<FilterOptions>({
       gender: '',
       showActiveOnly: false,
@@ -41,7 +40,7 @@ const View = () => {
             try {
                 setLoadingData(true)
                 const response = await fetch('https://055d8281-4c59-4576-9474-9b4840b30078.mock.pstmn.io/subjects');
-                const result = (await response.json()).data as Subject[]
+                const result = (await response.json()).data as SubjectInfo[]
         
                 console.log(result)
                 setSubjects(result)

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { SlArrowUp, SlArrowDown } from "react-icons/sl";
 import SubjectInfo from '../models/SubjectInfo';
+import { SlArrowUp, SlArrowDown } from "react-icons/sl";
 
 
   

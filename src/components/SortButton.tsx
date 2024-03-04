@@ -1,8 +1,7 @@
-import { Button } from "@mantine/core"
-import { forwardRef } from "react"
+import { forwardRef } from "react";
+import { Button } from "@mantine/core";
 import { GoSortAsc } from "react-icons/go";
-
-import '../styles.css'; // Import your CSS file
+import '../styles.css';
 
 
 const sortButton = forwardRef<HTMLButtonElement, { activeSort: boolean }>(({ activeSort, ...others }, ref) => {

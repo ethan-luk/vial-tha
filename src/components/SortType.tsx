@@ -1,5 +1,5 @@
-import { Button, Group } from "@mantine/core"
-import React from "react"
+import React from "react";
+import { Button, Group } from "@mantine/core";
 
 interface SortTypeProps {
     updateSortType: (sortAsc: boolean | null) => void;

@@ -1,8 +1,9 @@
-import { Menu, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
-import FilterAccordion from "./FilterAccordion";
 import { FilterProps } from "../models/FilterOptions";
+import FilterAccordion from "./FilterAccordion";
 import FilterButton from "./FilterButton";
+import { Menu, Text } from "@mantine/core";
+
 
 const FilterMap: React.FC<FilterProps> = ({ updateFilters, currentFilters, activeFilters }) =>  {
 

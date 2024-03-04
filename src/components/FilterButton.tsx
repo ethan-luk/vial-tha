@@ -1,8 +1,8 @@
-import { Button } from "@mantine/core"
-import { forwardRef } from "react"
+import { Button } from "@mantine/core";
+import { forwardRef } from "react";
 import { LuFilter } from "react-icons/lu";
 
-import '../styles.css'; // Import your CSS file
+import '../styles.css';
 
 
 const FilterButton  = forwardRef<HTMLButtonElement, { numActiveFilters: number }>(({ numActiveFilters, ...others }, ref) => {

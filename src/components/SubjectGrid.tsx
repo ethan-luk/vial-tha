@@ -1,5 +1,5 @@
-import { Container, Flex, Grid, Space, Stack, rem, Text } from "@mantine/core"
-import SubjectInfo from "../models/SubjectInfo"
+import SubjectInfo from "../models/SubjectInfo";
+import { Container, Flex, Grid, Space, Stack, rem, Text } from "@mantine/core";
 import { FaFemale, FaMale } from "react-icons/fa";
 
 

@@ -1,6 +1,5 @@
+import React, { useEffect, useState } from "react";
 import { Radio } from "@mantine/core";
-import React from "react";
-import { useEffect, useState } from "react";
 
 interface SortRadioProps {
     updateSortOption: (sortOption: string) => void;
