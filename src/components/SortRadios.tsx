@@ -5,11 +5,12 @@ import { useEffect, useState } from "react";
 interface SortRadioProps {
     updateSortOption: (sortOption: string) => void;
     currentSort: string
+    activeSort: boolean
 }
 
-const SortRadios: React.FC<SortRadioProps> = React.forwardRef(({ updateSortOption, currentSort }, _ ) => {
+const SortRadios: React.FC<SortRadioProps> = React.forwardRef(({ updateSortOption, currentSort, activeSort }, _ ) => {
 
-    const [sortOption, setSortOption] = useState(currentSort);
+    const [sortOption, setSortOption] = useState<string>(activeSort ? currentSort : '');
     
     useEffect(() => {
         updateSortOption(sortOption)

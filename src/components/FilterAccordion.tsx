@@ -27,6 +27,9 @@ const FilterAccordion: React.FC<FilterProps & CalendarProps> = React.forwardRef(
     const [startDate, setStartDate] = useState<Date | null>(currentFilters.startDate.getTime() == new Date('0000-01-01T00:00:00.000Z').getTime() ? null : currentFilters.startDate);
     const [endDate, setEndDate] = useState<Date | null>(currentFilters.endDate.getTime() == new Date('9999-12-31T23:59:59.999Z').getTime() ? null : currentFilters.endDate);
 
+    const [startDateError, setStartDateError] = useState<string | null>(null)
+    const [endDateError, setEndDateError] = useState<string | null>(null)
+
     const [filters, setFilters] = useState<FilterOptions>(currentFilters);
 
     useEffect(() => {
@@ -121,22 +124,34 @@ const FilterAccordion: React.FC<FilterProps & CalendarProps> = React.forwardRef(
 
     const handleStartDateChange = (newStartDate: Date | null) => {
         const startDateToUse = newStartDate || new Date('0000-01-01T00:00:00.000Z');
-        setFilters({
-          ...filters,
-          startDate: startDateToUse
-        })
-        setStartDate(newStartDate)
+        if (startDateToUse.getTime() > filters.endDate.getTime()) {
+            setStartDateError("Start date can't come after end date!")
+        }
+        else {
+            setFilters({
+                ...filters,
+                startDate: startDateToUse
+            })
+            setStartDate(newStartDate)
+            setStartDateError(null)
+        }
         setCalendarOpened(false)
     }
 
     const handleEndDateChange = (newEndDate: Date | null) => {
         const endDateToUse = newEndDate || new Date('9999-12-31T23:59:59.999Z');
-        setFilters({
-          ...filters,
-          endDate: endDateToUse
-        })
+        if (endDateToUse.getTime() < filters.startDate.getTime()) {
+            setEndDateError("End date can't come before start date!")
+        }
+        else {
+            setFilters({
+                ...filters,
+                endDate: endDateToUse
+            })
+            setEndDate(newEndDate)
+            setEndDateError(null)
 
-        setEndDate(newEndDate)
+        }
         setCalendarOpened(false)
     }
 
@@ -255,6 +270,7 @@ const FilterAccordion: React.FC<FilterProps & CalendarProps> = React.forwardRef(
                 <Accordion.Panel>
                     <DateInput
                         clearable
+                        error={startDateError}
                         value={startDate}
                         onChange={handleStartDateChange}
                         label="From"
@@ -264,6 +280,7 @@ const FilterAccordion: React.FC<FilterProps & CalendarProps> = React.forwardRef(
                     <Space h="md" />
                     <DateInput
                         clearable
+                        error={endDateError}
                         value={endDate}
                         onChange={handleEndDateChange}
                         label="To"

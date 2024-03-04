@@ -58,6 +58,12 @@ const GridSortMap: React.FC<GridSortButtonProps> = ({ updateSort, activeSort, su
         }
     }, [sortOption, sortAsc])
 
+    useEffect(() => {
+        if (!activeSort) {
+            setSortAsc(null)
+        }
+    })
+
     const handleSortOption = (option: string) => {
         setSortOption(option)
     }
@@ -75,9 +81,9 @@ const GridSortMap: React.FC<GridSortButtonProps> = ({ updateSort, activeSort, su
       
           <Menu.Dropdown>
             <Menu.Label>Sort By:</Menu.Label>
-            <Menu.Item component={SortRadios} updateSortOption={handleSortOption} currentSort={sortOption}/>
+            <Menu.Item component={SortRadios} updateSortOption={handleSortOption} currentSort={sortOption} activeSort={activeSort}/>
             <Space h='xl' />
-            <Menu.Item component={SortType} updateSortType={handleSortType} disable={sortOption == ''}/>
+            <Menu.Item component={SortType} updateSortType={handleSortType} disable={sortOption == ''} currentType={sortAsc}/>
             <Space h='xs' />
             <Menu.Divider />
             <Menu.Item closeMenuOnClick h={45} ps='md'>

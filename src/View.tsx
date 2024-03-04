@@ -27,8 +27,7 @@ const View = () => {
     });
 
     const [loadingData, setLoadingData] = useState<boolean>(false)
-    const [viewControl, setViewControl] = useState<string>('grid')
-
+    const [viewControl, setViewControl] = useState<string>('table')
 
     const [isActiveFilterChecked, setIsActiveFilterChecked] = useState<boolean>(false);    
 
@@ -106,7 +105,7 @@ const View = () => {
                 <Grid.Col span={12} />
                 <Grid.Col span={12} />
                 <Grid.Col span={5}>
-                    <Title c='orange' order={2}>Subjects</Title>
+                    <Title order={1}>Subjects</Title>
                 </Grid.Col>
                 <Grid.Col span={7}>
                     <Flex
@@ -148,7 +147,7 @@ const View = () => {
                             onChange={(event) => handleSearchFilter(event.target.value)}
                         />
                         <FilterMap updateFilters={updateFilters} currentFilters={filters} activeFilters={activeFilters} />
-                        <GridSortMap updateSort={handleSort} activeSort={Object.keys(activeSort).length > 0} subjects={filteredData}/>
+                        <GridSortMap updateSort={handleSort} activeSort={Object.keys(activeSort).length > 0} subjects={subjects}/>
                     </Group>
                 </Grid.Col>
                 <Grid.Col span={3}>
@@ -169,9 +168,22 @@ const View = () => {
                 </Grid.Col>
                 <Grid.Col span={12}>
                     <Group gap='sm'>
+                        <Text size='sm' fw={500}>{filteredData.length.toString()} Results</Text>
+                        {
+                            isActiveFilterChecked && <Chip
+                            icon={<IconX style={{ width: rem(16), height: rem(16) }} />}
+                            color="purple"
+                            variant="light"
+                            checked={true}
+                            onClick={() => setIsActiveFilterChecked(false)}
+                            >
+                        <p>Active Only</p>
+                    </Chip>
+                        }
                         <ActiveFilterElements updateFilters={updateFilters} 
                                             updateActiveFilters={updateActiveFilters} 
-                                            currentFilters={filters}/>
+                                            currentFilters={filters}
+                                            />
                          <Chip
                                 icon={<IconX style={{ width: rem(16), height: rem(16) }} />}
                                 color="green"
@@ -187,7 +199,7 @@ const View = () => {
                     </Group>
                 </Grid.Col>
                 <Grid.Col span={12}>
-                    {viewControl == 'grid' ? <SubjectGrid subjects={filteredData} /> : <SubjectTable subjects={filteredData} updateSort={handleSort}/>}
+                    {viewControl == 'grid' ? <SubjectGrid subjects={filteredData} /> : <SubjectTable subjects={filteredData} updateSort={handleSort} />}
                 </Grid.Col>
                 <Grid.Col span={12}>
                     {filteredData.length == 0 && !loadingData &&

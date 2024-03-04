@@ -16,7 +16,7 @@ const SubjectGrid: React.FC<GridProps> = ({ subjects }) => {
             h: 275,
             style: {
                 borderRadius: '16px',
-                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' // Add the shadow style here
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
             }
         };
     };
@@ -33,10 +33,10 @@ const SubjectGrid: React.FC<GridProps> = ({ subjects }) => {
                         >
                         {subject.gender == 'Female' ? <FaFemale style={{ width: rem(60), 
                                                                 height: rem(60), 
-                                                                color: 'orange'}} /> : 
+                                                                color: '#DE3163'}} /> : 
                                                     <FaMale style={{ width: rem(60), 
                                                                     height: rem(60), 
-                                                                    color: 'orange' }}/>}
+                                                                    color: '#0096FF' }}/>}
                     </Flex>
                     <Space h="lg" />
                     <Text size='lg' ta='center' fw={700}>{subject.name}</Text>
